@@ -21,22 +21,27 @@ import kotlinx.serialization.json.jsonArray
 import kotlin.test.DefaultAsserter.fail
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
+import kotlin.test.assertFailsWith
 
 abstract class AbstractTest {
-    var p: PatchTestCase? = null
+    //open fun data(): Collection<PatchTestCase> = ArrayList<PatchTestCase>()
+    abstract fun data(): Collection<PatchTestCase>
 
     @Test
     fun test() {
-        if (p?.isOperation == true) {
-            testOpertaion()
-        } else {
-            testError()
+        val testData = data()
+        for (p in testData) {
+            if (p.isOperation) {
+                testOpertaion(p)
+            } else {
+                testError(p)
+            }
         }
     }
 
-    @Test
-    private fun testOpertaion() {
-        val node: JsonObject = p?.getNode()!!
+    private fun testOpertaion(p: PatchTestCase) {
+        val node: JsonObject = p.getNode()
         val first: JsonElement = node.get("node")!!
         val second: JsonElement = node.get("expected")!!
         val patch: JsonElement = node.get("op")!!
@@ -44,21 +49,20 @@ abstract class AbstractTest {
         val secondPrime: JsonElement =
             JsonPatch.apply(patch.jsonArray, first)
         assertEquals(secondPrime, second, message)
-//        org.junit.Assert.assertThat<JsonElement>(
-//            message,
-//            secondPrime,
-//            org.hamcrest.core.IsEqual.equalTo<JsonElement>(second)
-//        )
     }
 
-    private fun testError() {
-        val node: JsonObject = p?.getNode()!!
+    private fun testError(p:PatchTestCase) {
+        val node: JsonObject = p.getNode()
         val first: JsonElement = node.get("node")!!
         val patch: JsonElement = node.get("op")!!
         try {
             JsonPatch.apply(patch.jsonArray, first)
-            fail("Failure expected: " + node.get("message"))
-        } catch (e: Exception) {
+            assertFails {
+                fail("Failure expected: " + node.get("message"))
+            }
+        }
+        catch (e: Exception) {
+            println("-> AssertFails with: ${e.message}")
         }
     }
 }

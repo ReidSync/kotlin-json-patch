@@ -16,14 +16,20 @@
 package com.temphee.kxjsonpatch
 
 import resources.testdata.TestData_REPLACE
+import kotlin.test.Test
 
 /**
  * @author ctranxuan (streamdata.io).
  */
-object ReplaceOperationTest : AbstractTest() {
+class ReplaceOperationTest : AbstractTest() {
 //    @org.junit.runners.Parameterized.Parameters
 //    @Throws(java.io.IOException::class)
-    fun data(): Collection<PatchTestCase> {
+    override fun data(): Collection<PatchTestCase> {
         return PatchTestCase.load(TestData_REPLACE)
+    }
+
+    @Test
+    fun childTest() {
+        test()
     }
 }

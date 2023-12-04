@@ -56,8 +56,8 @@ class PatchTestCase private constructor(
         }
 
         private fun isEnabled(node: JsonElement): Boolean {
-            val disabled: JsonElement = node.jsonObject.get("disabled")!!
-            return !disabled.jsonPrimitive.boolean
+            val disabled: JsonElement? = node.jsonObject.get("disabled")
+            return (disabled == null || !disabled.jsonPrimitive.boolean)
         }
     }
 }
