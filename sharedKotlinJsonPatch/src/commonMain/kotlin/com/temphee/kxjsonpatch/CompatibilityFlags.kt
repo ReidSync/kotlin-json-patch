@@ -14,9 +14,7 @@
  * limitations under the License.
 */
 
-package com.beyondeye.kjsonpatch
-
-import java.util.EnumSet
+package com.alightcreative.util.jsonpatch
 
 /**
  * Created by tomerga on 04/09/2016.
@@ -26,9 +24,8 @@ enum class CompatibilityFlags {
 
 
     companion object {
-
-        fun defaults(): EnumSet<CompatibilityFlags> {
-            return EnumSet.noneOf(CompatibilityFlags::class.java)
+        fun defaults(): Set<CompatibilityFlags> {
+            return setOf(CompatibilityFlags.MISSING_VALUES_AS_NULLS)
         }
     }
 }

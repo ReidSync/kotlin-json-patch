@@ -1,4 +1,4 @@
-package com.beyondeye.kjsonpatch.lcs
+package com.alightcreative.util.jsonpatch.lcs
 
 /**
  * code extracted from Apache Commons Collections 4.1
@@ -36,12 +36,13 @@ object ListUtils {
         equator: Equator<in E>?
     ): List<E> {
         if (a == null || b == null) {
-            throw java.lang.NullPointerException("List must not be null")
+            throw NullPointerException("List must not be null")
         }
         if (equator == null) {
-            throw java.lang.NullPointerException("Equator must not be null")
+            throw NullPointerException("Equator must not be null")
         }
-        val comparator: SequencesComparator<E> = SequencesComparator<E>(a, b, equator)
+        val comparator: SequencesComparator<E> =
+            SequencesComparator<E>(a, b, equator)
         val script: EditScript<E> = comparator.getScript()
         val visitor = LcsVisitor<E>()
         script.visit(visitor)
@@ -52,10 +53,10 @@ object ListUtils {
      * A helper class used to construct the longest common subsequence.
      */
     private class LcsVisitor<E> : CommandVisitor<E> {
-        private val sequence: java.util.ArrayList<E>
+        private val sequence: ArrayList<E>
 
         init {
-            sequence = java.util.ArrayList<E>()
+            sequence = ArrayList<E>()
         }
 
         override fun visitInsertCommand(`object`: E) {}

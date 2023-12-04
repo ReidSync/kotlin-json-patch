@@ -14,13 +14,11 @@
  * limitations under the License.
 */
 
-package com.beyondeye.kjsonpatch
+package com.alightcreative.util.jsonpatch
 
-import com.google.gson.JsonElement
-import com.google.gson.JsonNull
-import com.google.gson.JsonObject
-
-import java.util.EnumSet
+import kotlinx.serialization.json.*
+import kotlin.jvm.JvmOverloads
+import kotlin.jvm.JvmStatic
 
 /**
  * User: gopi.vishwakarma
@@ -44,16 +42,16 @@ object JsonPatch {
     }
 
     @Throws(InvalidJsonPatchException::class)
-    private fun process(patch: JsonElement, processor: JsonPatchProcessor, flags: EnumSet<CompatibilityFlags>) {
+    private fun process(patch: JsonElement, processor: JsonPatchProcessor, flags: Set<CompatibilityFlags>) {
 
-        if (!patch.isJsonArray)
+        if (!patch.isJsonArray())
             throw InvalidJsonPatchException("Invalid JSON Patch payload (not an array)")
-        val operations = patch.asJsonArray.iterator()
+        val operations = patch.jsonArray.iterator()
         while (operations.hasNext()) {
             val jsonNode_ = operations.next()
-            if (!jsonNode_.isJsonObject) throw InvalidJsonPatchException("Invalid JSON Patch payload (not an object)")
-            val jsonNode = jsonNode_.asJsonObject
-            val operation = op.opFromName(getPatchAttr(jsonNode.asJsonObject, consts.OP).toString().replace("\"".toRegex(), ""))
+            if (!jsonNode_.isJsonObject()) throw InvalidJsonPatchException("Invalid JSON Patch payload (not an object)")
+            val jsonNode = jsonNode_.jsonObject
+            val operation = op.opFromName(getPatchAttr(jsonNode.jsonObject, consts.OP).toString().replace("\"".toRegex(), ""))
             val path = getPath(getPatchAttr(jsonNode, consts.PATH))
 
             when (operation) {
@@ -66,7 +64,7 @@ object JsonPatch {
                     if (!flags.contains(CompatibilityFlags.MISSING_VALUES_AS_NULLS))
                         value = getPatchAttr(jsonNode, consts.VALUE)
                     else
-                        value = getPatchAttrWithDefault(jsonNode, consts.VALUE, JsonNull.INSTANCE)
+                        value = getPatchAttrWithDefault(jsonNode, consts.VALUE, JsonNull)
                     processor.add(path, value)
                 }
 
@@ -75,7 +73,7 @@ object JsonPatch {
                     if (!flags.contains(CompatibilityFlags.MISSING_VALUES_AS_NULLS))
                         value = getPatchAttr(jsonNode, consts.VALUE)
                     else
-                        value = getPatchAttrWithDefault(jsonNode, consts.VALUE, JsonNull.INSTANCE)
+                        value = getPatchAttrWithDefault(jsonNode, consts.VALUE, JsonNull)
                     processor.replace(path, value)
                 }
 
@@ -94,7 +92,7 @@ object JsonPatch {
                     if (!flags.contains(CompatibilityFlags.MISSING_VALUES_AS_NULLS))
                         value = getPatchAttr(jsonNode, consts.VALUE)
                     else
-                        value = getPatchAttrWithDefault(jsonNode, consts.VALUE, JsonNull.INSTANCE)
+                        value = getPatchAttrWithDefault(jsonNode, consts.VALUE, JsonNull)
                     processor.test(path, value)
                 }
             }
@@ -102,12 +100,16 @@ object JsonPatch {
     }
 
     @Throws(InvalidJsonPatchException::class)
-    @JvmStatic @JvmOverloads fun validate(patch: JsonElement, flags: EnumSet<CompatibilityFlags> = CompatibilityFlags.defaults()) {
+    @JvmStatic
+    @JvmOverloads
+    fun validate(patch: JsonElement, flags: Set<CompatibilityFlags> = CompatibilityFlags.defaults()) {
         process(patch, NoopProcessor.INSTANCE, flags)
     }
 
     @Throws(JsonPatchApplicationException::class)
-    @JvmStatic @JvmOverloads fun apply(patch: JsonElement, source: JsonElement, flags: EnumSet<CompatibilityFlags> = CompatibilityFlags.defaults()): JsonElement {
+    @JvmStatic
+    @JvmOverloads
+    fun apply(patch: JsonElement, source: JsonElement, flags: Set<CompatibilityFlags> = CompatibilityFlags.defaults()): JsonElement {
         val processor = ApplyProcessor(source)
         process(patch, processor, flags)
         return processor.result()

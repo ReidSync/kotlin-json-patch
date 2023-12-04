@@ -14,68 +14,81 @@
  * limitations under the License.
 */
 
-package com.beyondeye.kjsonpatch
+package com.alightcreative.util.jsonpatch
 
-
-import com.google.gson.*
+import kotlinx.serialization.json.*
 
 class ApplyProcessor(target: JsonElement) : JsonPatchProcessor {
 
-    private var target: JsonElement
+    private var targetSource: JsonElement
 
     init {
-        this.target = target.deepCopy()
+        this.targetSource = target.deepCopy()
     }
 
     fun result(): JsonElement {
-        return target
+        return targetSource
     }
 
-    override fun move(fromPath: List<String>, toPath: List<String>) {
-        val parentNode = getParentNode(fromPath)
+    override fun move(fromPath: List<String>, toPath: List<String>): JsonElement {
+        val parentNode = getParentNode(targetSource, fromPath)
         val field = fromPath[fromPath.size - 1].replace("\"".toRegex(), "")
-        val valueNode = if (parentNode!!.isJsonArray) parentNode.asJsonArray.get(Integer.parseInt(field)) else parentNode.asJsonObject.get(field)
+        val valueNode = if (parentNode!! is JsonArray) {
+            //parentNode.asJsonArray.get(Integer.parseInt(field))
+            parentNode.jsonArray[field.toInt()]
+        }
+        else {
+            //parentNode.asJsonObject.get(field)
+            parentNode.jsonObject[field]
+        }
         remove(fromPath)
-        add(toPath, valueNode)
+        add(toPath, valueNode!!)
     }
 
-    override fun copy(fromPath: List<String>, toPath: List<String>) {
-        val parentNode = getParentNode(fromPath)
+    override fun copy(fromPath: List<String>, toPath: List<String>): JsonElement {
+        val parentNode = getParentNode(targetSource, fromPath)
         val field = fromPath[fromPath.size - 1].replace("\"".toRegex(), "")
-        val valueNode = if (parentNode!!.isJsonArray) parentNode.asJsonArray.get(Integer.parseInt(field)) else parentNode.asJsonObject.get(field)
-        add(toPath, valueNode)
+        val valueNode = if (parentNode!! is JsonArray) {
+            //parentNode.asJsonArray.get(Integer.parseInt(field))
+            parentNode.jsonArray[field.toInt()]
+        }
+        else {
+            //parentNode.asJsonObject.get(field)
+            parentNode.jsonObject[field]
+        }
+        add(toPath, valueNode!!)
     }
 
-    override fun test(path: List<String>, value: JsonElement) {
+    override fun test(path: List<String>, value: JsonElement): JsonElement {
         if (path.isEmpty()) {
             throw JsonPatchApplicationException("[TEST Operation] path is empty , path : ")
         } else {
-            val parentNode = getParentNode(path)
+            val parentNode = getParentNode(targetSource, path)
             if (parentNode == null) {
                 throw JsonPatchApplicationException("[TEST Operation] noSuchPath in source, path provided : " + path)
             } else {
                 val fieldToReplace = path[path.size - 1].replace("\"".toRegex(), "")
                 if (fieldToReplace == "" && path.size == 1)
-                    target = value
+                    targetSource = value
                 else if (!parentNode.isContainerNode())
                     throw JsonPatchApplicationException("[TEST Operation] parent is not a container in source, path provided : $path | node : $parentNode")
-                else if (parentNode.isJsonArray) {
-                    val target = parentNode.asJsonArray
+                else if (parentNode is JsonArray) {
+                    val target = parentNode
                     val idxStr = path[path.size - 1]
 
                     if ("-" == idxStr) {
                         // see http://tools.ietf.org/html/rfc6902#section-4.1
-                        if (target.get(target.size() - 1) != value) {
+                        if (target.get(target.size - 1) != value) {
                             throw JsonPatchApplicationException("[TEST Operation] value mismatch")
                         }
                     } else {
-                        val idx = arrayIndex(idxStr.replace("\"".toRegex(), ""), target.size())
+                        val idx = arrayIndex(idxStr.replace("\"".toRegex(), ""), target.size)
                         if (target.get(idx) != value) {
                             throw JsonPatchApplicationException("[TEST Operation] value mismatch")
                         }
                     }
                 } else {
-                    val target = parentNode.asJsonObject
+                    val target = parentNode as JsonObject
                     val key = path[path.size - 1].replace("\"".toRegex(), "")
                     if (target.get(key) != value) {
                         throw JsonPatchApplicationException("[TEST Operation] value mismatch")
@@ -85,20 +98,20 @@ class ApplyProcessor(target: JsonElement) : JsonPatchProcessor {
         }
     }
 
-    override fun add(path: List<String>, value: JsonElement) {
+    override fun add(path: List<String>, value: JsonElement): JsonElement {
         if (path.isEmpty()) {
             throw JsonPatchApplicationException("[ADD Operation] path is empty , path : ")
         } else {
-            val parentNode = getParentNode(path)
+            val parentNode = getParentNode(targetSource, path)
             if (parentNode == null) {
                 throw JsonPatchApplicationException("[ADD Operation] noSuchPath in source, path provided : " + path)
             } else {
                 val fieldToReplace = path[path.size - 1].replace("\"".toRegex(), "")
                 if (fieldToReplace == "" && path.size == 1)
-                    target = value
+                    targetSource = value
                 else if (!parentNode.isContainerNode())
                     throw JsonPatchApplicationException("[ADD Operation] parent is not a container in source, path provided : $path | node : $parentNode")
-                else if (parentNode.isJsonArray)
+                else if (parentNode is JsonArray)
                     addToArray(path, value, parentNode)
                 else
                     addToObject(path, parentNode, value)
@@ -106,70 +119,72 @@ class ApplyProcessor(target: JsonElement) : JsonPatchProcessor {
         }
     }
 
-    private fun addToObject(path: List<String>, node: JsonElement, value: JsonElement) {
-        val target = node.asJsonObject
+    private fun addToObject(path: List<String>, node: JsonElement, value: JsonElement): JsonObject {
+        val target = node as JsonObject
         val key = path[path.size - 1].replace("\"".toRegex(), "")
-        target.add(key, value)
+
+        return target.add(key, value)
     }
 
     private fun addToArray(path: List<String>, value: JsonElement, parentNode: JsonElement) {
-        val target = parentNode.asJsonArray
+        var target = parentNode as JsonArray
         val idxStr = path[path.size - 1]
 
         if ("-" == idxStr) {
             // see http://tools.ietf.org/html/rfc6902#section-4.1
-            target.add(value)
+            //target.add(value)
+            target = target.add(value)
         } else {
-            val idx = arrayIndex(idxStr.replace("\"".toRegex(), ""), target.size())
-            target.insert(idx, value)
+            //val idx = arrayIndex(idxStr.replace("\"".toRegex(), ""), target.size())
+            val idx = arrayIndex(idxStr.replace("\"".toRegex(), ""), target.size)
+            target = target.insert(idx, value)
         }
     }
 
-    override fun replace(path: List<String>, value: JsonElement) {
+    override fun replace(path: List<String>, value: JsonElement): JsonElement {
         if (path.isEmpty()) {
             throw JsonPatchApplicationException("[Replace Operation] path is empty")
         } else {
-            val parentNode = getParentNode(path)
+            var parentNode = getParentNode(targetSource, path)
             if (parentNode == null) {
                 throw JsonPatchApplicationException("[Replace Operation] noSuchPath in source, path provided : " + path)
             } else {
                 val fieldToReplace = path[path.size - 1].replace("\"".toRegex(), "")
                 if (fieldToReplace.isNullOrEmpty() && path.size == 1)
-                    target = value
-                else if (parentNode.isJsonObject)
-                    parentNode.asJsonObject.add(fieldToReplace, value)
-                else if (parentNode.isJsonArray) {
-                    val parentNode_ = parentNode.asJsonArray
-                    parentNode_.set(arrayIndex(fieldToReplace, parentNode_.size() - 1), value)
+                    targetSource = value
+                else if (parentNode is JsonObject)
+                    parentNode = parentNode.add(fieldToReplace, value)
+                    //parentNode.toMutableMap().add(fieldToReplace, value)
+                else if (parentNode is JsonArray) {
+                    parentNode = parentNode.set(arrayIndex(fieldToReplace, parentNode.size - 1), value)
                 } else
                     throw JsonPatchApplicationException("[Replace Operation] noSuchPath in source, path provided : " + path)
             }
         }
     }
 
-    override fun remove(path: List<String>) {
+    override fun remove(path: List<String>): JsonElement {
         if (path.isEmpty()) {
             throw JsonPatchApplicationException("[Remove Operation] path is empty")
         } else {
-            val parentNode = getParentNode(path)
+            var parentNode = getParentNode(targetSource, path)
             if (parentNode == null) {
                 throw JsonPatchApplicationException("[Remove Operation] noSuchPath in source, path provided : " + path)
             } else {
                 val fieldToRemove = path[path.size - 1].replace("\"".toRegex(), "")
-                if (parentNode.isJsonObject)
-                    parentNode.asJsonObject.remove(fieldToRemove)
-                else if (parentNode.isJsonArray) {
-                    val parentNode_ = parentNode.asJsonArray
-                    parentNode_.remove(arrayIndex(fieldToRemove, parentNode_.size() - 1))
+                if (parentNode is JsonObject)
+                    parentNode = parentNode.remove(fieldToRemove)
+                else if (parentNode is JsonArray) {
+                    parentNode = parentNode.remove(arrayIndex(fieldToRemove, parentNode.size - 1))
                 } else
                     throw JsonPatchApplicationException("[Remove Operation] noSuchPath in source, path provided : " + path)
             }
         }
     }
 
-    private fun getParentNode(fromPath: List<String>): JsonElement? {
+    private fun getParentNode(source: JsonElement, fromPath: List<String>): JsonElement? {
         val pathToParent = fromPath.subList(0, fromPath.size - 1) // would never by out of bound, lets see
-        return getNode(target, pathToParent, 1)
+        return getNode(source, pathToParent, 1)
     }
 
     private fun getNode(ret: JsonElement, path: List<String>, pos_: Int): JsonElement? {
@@ -178,17 +193,17 @@ class ApplyProcessor(target: JsonElement) : JsonPatchProcessor {
             return ret
         }
         val key = path[pos]
-        if (ret.isJsonArray) {
-            val keyInt = Integer.parseInt(key.replace("\"".toRegex(), ""))
-            val element = ret.asJsonArray.get(keyInt)
+        if (ret is JsonArray) {
+            val keyInt = (key.replace("\"".toRegex(), "")).toInt()
+            val element = ret.get(keyInt)
             if (element == null)
                 return null
             else
-                return getNode(ret.asJsonArray.get(keyInt), path, ++pos)
-        } else if (ret.isJsonObject) {
-            val ret_ = ret.asJsonObject
-            if (ret_.has(key)) {
-                return getNode(ret_.get(key), path, ++pos)
+                return getNode(ret.get(keyInt), path, ++pos)
+        } else if (ret is JsonObject) {
+            val ret_ = ret
+            if (ret_.containsKey(key)) {
+                return getNode(ret_.get(key)!!, path, ++pos)
             }
             return null
         } else {
@@ -197,7 +212,7 @@ class ApplyProcessor(target: JsonElement) : JsonPatchProcessor {
     }
 
     private fun arrayIndex(s: String, max: Int): Int {
-        val index = Integer.parseInt(s)
+        val index = s.toInt()
         if (index < 0) {
             throw JsonPatchApplicationException("index Out of bound, index is negative")
         } else if (index > max) {
@@ -207,31 +222,94 @@ class ApplyProcessor(target: JsonElement) : JsonPatchProcessor {
     }
 }
 
-//TODO insert not very efficient: find a better way to do it?
-private fun insert(target: JsonArray, idx: Int, value: JsonElement) {
-    val lastidx = target.size() - 1
-    val last = target.get(lastidx)
-    target.add(last)
-    //move up elements after idx
-    for (i in (lastidx - 1) downTo idx)
-        target.set(i + 1, target.get(i))
-    //finally insert new value
-    target.set(idx, value)
-}
+////TODO insert not very efficient: find a better way to do it?
+//private fun insert(target: JsonArray, idx: Int, value: JsonElement) {
+//    val lastidx = target.size - 1
+//    val last = target.get(lastidx)
+//    target.add(last)
+//    //move up elements after idx
+//    for (i in (lastidx - 1) downTo idx)
+//        target.set(i + 1, target.get(i))
+//    //finally insert new value
+//    target.set(idx, value)
+//}
 
 private fun  JsonArray.insert(index: Int, value_: JsonElement?):JsonArray {
-    val value=value_ ?:JsonNull.INSTANCE
-    if(index>=size()) {
-        add(value)
-        return this
+    val value=value_ ?:JsonNull
+    if(index>=size) {
+        return this.add(value)
     }
-    if(index<0)
-        insert(this,0,value)
-    else
-        insert(this,index,value)
-    return this
+    else if(index<0) {
+        return this.copy { insert(0, value) }
+    }
+    else {
+        return this.copy { insert(index, value) }
+    }
+}
+
+fun JsonArray.add(value_: JsonElement?):JsonArray {
+    val value=value_ ?:JsonNull
+    return copy { add(value) }
+}
+
+private fun JsonArray.set(index: Int, value_: JsonElement?):JsonArray {
+    val value=value_ ?:JsonNull
+    if(index>=size) {
+        throw IndexOutOfBoundsException("")
+    }
+    return copy { this[index] = value }
+}
+
+private fun JsonArray.remove(index:Int):JsonArray {
+    return copy{ removeAt(index) }
+}
+
+inline fun JsonArray.copy(mutatorBlock: MutableList<JsonElement>.() -> Unit): JsonArray {
+    return JsonArray(this.toMutableList().apply(mutatorBlock))
+}
+
+fun  JsonObject.add(key: String, value_: JsonElement?):JsonObject {
+    val value=value_ ?:JsonNull
+    return copy { this[key] = value }
+}
+
+private fun  JsonObject.remove(key: String):JsonObject {
+    return copy { remove(key) }
+}
+
+fun JsonObject.addProperty(key: String, value: String): JsonObject {
+    return this.copy {
+        this[key] = JsonPrimitive(value)
+    }
+}
+
+inline fun JsonObject.copy(mutatorBlock: MutableMap<String, JsonElement>.() -> Unit): JsonObject {
+    return JsonObject(this.toMutableMap().apply(mutatorBlock))
 }
 
 private fun  JsonElement.isContainerNode(): Boolean {
-    return this.isJsonArray || this.isJsonObject
+    return this is JsonArray || this is JsonObject
+}
+
+fun JsonElement.deepCopy(): JsonElement {
+    return when(this) {
+        is JsonArray-> this.jsonArray.copy {}
+        is JsonObject-> this.jsonObject.copy {}
+        is JsonPrimitive-> this.jsonPrimitive /* Todo */
+        is JsonNull-> this.jsonNull
+    }
+}
+
+fun JsonElement.isJsonArray(): Boolean {
+    if (this as? JsonArray != null) {
+        return true
+    }
+    return false
+}
+
+fun JsonElement.isJsonObject(): Boolean {
+    if (this as? JsonObject != null) {
+        return true
+    }
+    return false
 }

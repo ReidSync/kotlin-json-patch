@@ -13,13 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package com.beyondeye.kjsonpatch
+
+package com.alightcreative.util.jsonpatch;
+
+
+import kotlinx.serialization.json.*
 
 internal interface JsonPatchProcessor {
-    fun remove(path: List<String?>?)
-    fun replace(path: List<String?>?, value: com.google.gson.JsonElement?)
-    fun add(path: List<String?>?, value: com.google.gson.JsonElement?)
-    fun move(fromPath: List<String?>?, toPath: List<String?>?)
-    fun copy(fromPath: List<String?>?, toPath: List<String?>?)
-    fun test(path: List<String?>?, value: com.google.gson.JsonElement?)
+    fun remove(path: List<String>): JsonElement
+    fun replace(path: List<String>, value: JsonElement): JsonElement
+    fun add(path: List<String>, value: JsonElement): JsonElement
+    fun move(fromPath: List<String>, toPath: List<String>): JsonElement
+    fun copy(fromPath: List<String>, toPath: List<String>): JsonElement
+    fun test(path: List<String>, value: JsonElement): JsonElement
 }

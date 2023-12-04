@@ -1,6 +1,6 @@
-package com.beyondeye.kjsonpatch
+package com.alightcreative.util.jsonpatch
 
-import com.google.gson.JsonElement
+import kotlinx.serialization.json.*
 
 
 internal object NodeType {
@@ -10,8 +10,8 @@ internal object NodeType {
     val PRIMITIVE_OR_NULL = 3
 
     fun getNodeType(node: JsonElement): Int {
-        if (node.isJsonArray) return ARRAY
-        if (node.isJsonObject) return OBJECT
+        if (node is JsonArray) return ARRAY
+        if (node is JsonObject) return OBJECT
         //        if(node.isJsonNull()) return NULL;
         return PRIMITIVE_OR_NULL
     }

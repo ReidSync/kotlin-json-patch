@@ -1,4 +1,4 @@
-package com.beyondeye.kjsonpatch.lcs
+package com.alightcreative.util.jsonpatch.lcs
 
 import kotlin.jvm.JvmOverloads
 
@@ -59,12 +59,19 @@ import kotlin.jvm.JvmOverloads
  * @since 4.0
  * @version $Id: SequencesComparator.java 1540567 2013-11-10 22:19:29Z tn $
  */
+
 class SequencesComparator<T> @JvmOverloads constructor(
-    /** First sequence.  */
-    private val sequence1: List<T>,
-    /** Second sequence.  */
-    private val sequence2: List<T>, equator: Equator<in T> = DefaultEquator.defaultEquator()
+//class SequencesComparator<T> constructor(
+sequence1: List<T>,
+sequence2: List<T>,
+equator: Equator<in T> = DefaultEquator.defaultEquator()
 ) {
+    /** First sequence.  */
+    private val sequence1: List<T>
+
+    /** Second sequence.  */
+    private val sequence2: List<T>
+
     /** The equator used for testing object equality.  */
     private val equator: Equator<in T>
 
@@ -103,7 +110,8 @@ class SequencesComparator<T> @JvmOverloads constructor(
      * @param sequence2  second sequence to be compared
      */
     init {
-        sequence2 = sequence2
+        this.sequence1 = sequence1
+        this.sequence2 = sequence2
         this.equator = equator
         val size = sequence1.size + sequence2.size + 2
         vDown = IntArray(size)
@@ -123,12 +131,11 @@ class SequencesComparator<T> @JvmOverloads constructor(
      * @return the edit script resulting from the comparison of the two
      * sequences
      */
-    val script: EditScript<T>
-        get() {
-            val script = EditScript<T>()
-            buildScript(0, sequence1.size, 0, sequence2.size, script)
-            return script
-        }
+    fun getScript(): EditScript<T> {
+        val script = EditScript<T>()
+        buildScript(0, sequence1.size, 0, sequence2.size, script)
+        return script
+    }
 
     /**
      * Build a snake.
@@ -242,7 +249,7 @@ class SequencesComparator<T> @JvmOverloads constructor(
                 k += 2
             }
         }
-        throw java.lang.RuntimeException("Internal Error")
+        throw RuntimeException("Internal Error")
     }
 
     /**
@@ -258,8 +265,8 @@ class SequencesComparator<T> @JvmOverloads constructor(
         start1: Int, end1: Int, start2: Int, end2: Int,
         script: EditScript<T>
     ) {
-        val middle: Snake? = getMiddleSnake(start1, end1, start2, end2)
-        if (middle == null || middle.getStart() === end1 && middle.getDiag() === end1 - end2 || middle.getEnd() === start1 && middle.getDiag() === start1 - start2) {
+        val middle = getMiddleSnake(start1, end1, start2, end2)
+        if (middle == null || middle.start === end1 && middle.diag === end1 - end2 || middle.end === start1 && middle.diag === start1 - start2) {
             var i = start1
             var j = start2
             while (i < end1 || j < end2) {
@@ -279,16 +286,16 @@ class SequencesComparator<T> @JvmOverloads constructor(
             }
         } else {
             buildScript(
-                start1, middle.getStart(),
-                start2, middle.getStart() - middle.getDiag(),
+                start1, middle.start,
+                start2, middle.start - middle.diag,
                 script
             )
-            for (i in middle.getStart() until middle.getEnd()) {
+            for (i in middle.start until middle.end) {
                 script.append(KeepCommand(sequence1[i]))
             }
             buildScript(
-                middle.getEnd(), end1,
-                middle.getEnd() - middle.getDiag(), end2,
+                middle.end, end1,
+                middle.end - middle.diag, end2,
                 script
             )
         }
@@ -297,4 +304,38 @@ class SequencesComparator<T> @JvmOverloads constructor(
      * This class is a simple placeholder to hold the end part of a path
      * under construction in a [SequencesComparator].
      */
+
+
+    private class Snake
+    /**
+     * Simple constructor. Creates a new instance of Snake with specified indices.
+     *
+     * @param start  start index of the snake
+     * @param end  end index of the snake
+     * @param diag  diagonal number
+     */(
+        /** Start index.  */
+        val start: Int,
+        /** End index.  */
+        val end: Int,
+        /** Diagonal number.  */
+        val diag: Int
+    ) {
+        /**
+         * Get the start index of the snake.
+         *
+         * @return start index of the snake
+         */
+        /**
+         * Get the end index of the snake.
+         *
+         * @return end index of the snake
+         */
+        /**
+         * Get the diagonal number of the snake.
+         *
+         * @return diagonal number of the snake
+         */
+
+    }
 }

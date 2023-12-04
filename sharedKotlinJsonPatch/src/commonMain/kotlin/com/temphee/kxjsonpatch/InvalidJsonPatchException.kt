@@ -14,7 +14,7 @@
  * limitations under the License.
 */
 
-package com.beyondeye.kjsonpatch
+package com.alightcreative.util.jsonpatch
 
 /**
  * User: holograph

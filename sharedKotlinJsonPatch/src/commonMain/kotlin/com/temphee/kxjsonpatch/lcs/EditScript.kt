@@ -1,4 +1,4 @@
-package com.beyondeye.kjsonpatch.lcs
+package com.alightcreative.util.jsonpatch.lcs
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -67,7 +67,7 @@ class EditScript<T> {
      * Simple constructor. Creates a new empty script.
      */
     init {
-        commands = java.util.ArrayList<EditCommand<T>>()
+        commands = ArrayList<EditCommand<T>>()
         lCSLength = 0
         modifications = 0
     }
@@ -111,7 +111,7 @@ class EditScript<T> {
      *
      * @param visitor  the visitor that will visit all commands in turn
      */
-    fun visit(visitor: CommandVisitor<T>?) {
+    fun visit(visitor: CommandVisitor<T>) {
         for (command in commands) {
             command.accept(visitor)
         }

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.beyondeye.kjsonpatch.lcs
+package com.alightcreative.util.jsonpatch.lcs
 
 /**
  * Command representing the keeping of one object present in both sequences.
@@ -49,7 +49,8 @@ class KeepCommand<T>
      *
      * @param visitor  the visitor to be accepted
      */
+
     override fun accept(visitor: CommandVisitor<T>?) {
-        visitor!!.visitKeepCommand(`object`)
+        visitor?.visitKeepCommand(`object`)
     }
 }

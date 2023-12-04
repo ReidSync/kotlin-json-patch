@@ -1,4 +1,4 @@
-package com.beyondeye.kjsonpatch
+package com.alightcreative.util.jsonpatch
 
 /**
  * User: gopi.vishwakarma

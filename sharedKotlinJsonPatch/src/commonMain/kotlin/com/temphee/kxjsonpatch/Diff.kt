@@ -14,10 +14,11 @@
  * limitations under the License.
 */
 
-package com.beyondeye.kjsonpatch
+package com.alightcreative.util.jsonpatch
 
-import com.google.gson.JsonElement
-import com.google.gson.JsonNull
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlin.jvm.JvmStatic
 
 /**
  * User: gopi.vishwakarma
@@ -40,12 +41,13 @@ internal class Diff {
         this.operation = operation
         this.path = fromPath.toMutableList()
         this.toPath = toPath
-        this.value = JsonNull.INSTANCE
+        this.value = JsonNull
     }
 
     companion object {
 
-        @JvmStatic fun generateDiff(replace: Int, path: List<Any>, target: JsonElement): Diff {
+        @JvmStatic
+        fun generateDiff(replace: Int, path: List<Any>, target: JsonElement): Diff {
             return Diff(replace, path, target)
         }
     }
