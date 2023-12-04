@@ -14,7 +14,7 @@
  * limitations under the License.
 */
 
-package com.alightcreative.util.jsonpatch
+package com.temphee.kxjsonpatch
 
 /**
  * Created by tomerga on 04/09/2016.

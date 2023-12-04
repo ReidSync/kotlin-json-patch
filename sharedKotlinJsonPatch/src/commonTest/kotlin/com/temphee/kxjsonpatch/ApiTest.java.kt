@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package com.alightcreative.util.jsonpatch
+package com.temphee.kxjsonpatch
 
-import com.alightcreative.util.jsonpatch.utils.GsonObjectMapper
+import com.temphee.kxjsonpatch.utils.GsonObjectMapper
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import kotlin.test.Test

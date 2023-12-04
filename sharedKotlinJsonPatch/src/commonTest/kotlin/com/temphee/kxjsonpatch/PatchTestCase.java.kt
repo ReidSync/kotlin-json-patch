@@ -1,7 +1,7 @@
-package com.alightcreative.util.jsonpatch
+package com.temphee.kxjsonpatch
 
-import com.alightcreative.util.jsonpatch.utils.GsonObjectMapper
-import com.alightcreative.util.jsonpatch.utils.IOUtils.toString
+import com.temphee.kxjsonpatch.utils.GsonObjectMapper
+import com.temphee.kxjsonpatch.utils.IOUtils.toString
 import kotlinx.serialization.json.*
 
 /*

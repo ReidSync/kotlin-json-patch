@@ -1,4 +1,4 @@
-package com.alightcreative.util.jsonpatch
+package com.temphee.kxjsonpatch
 
 internal open class Operations {
     val ADD: Int = 0

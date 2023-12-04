@@ -1,4 +1,4 @@
-package com.alightcreative.util.jsonpatch.lcs
+package com.temphee.kxjsonpatch.lcs
 
 /**
  * code extracted from Apache Commons Collections 4.1

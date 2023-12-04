@@ -14,9 +14,9 @@
  * limitations under the License.
 */
 
-package com.alightcreative.util.jsonpatch
+package com.temphee.kxjsonpatch
 
-import com.alightcreative.util.jsonpatch.lcs.ListUtils
+import com.temphee.kxjsonpatch.lcs.ListUtils
 import kotlinx.serialization.json.*
 import kotlin.jvm.JvmStatic
 import kotlin.math.min

@@ -1,4 +1,4 @@
-package com.alightcreative.util.jsonpatch.utils
+package com.temphee.kxjsonpatch.utils
 
 object IOUtils {
     //see http://stackoverflow.com/questions/309424/read-convert-an-inputstream-to-a-string

@@ -1,4 +1,4 @@
-package com.alightcreative.util.jsonpatch
+package com.temphee.kxjsonpatch
 
 open class Constants {
     open val OP = "op"

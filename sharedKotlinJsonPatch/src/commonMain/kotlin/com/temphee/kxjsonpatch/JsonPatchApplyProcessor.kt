@@ -1,4 +1,4 @@
-package com.alightcreative.util.jsonpatch
+package com.temphee.kxjsonpatch
 
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -16,10 +16,23 @@ abstract class JsonPatchApplyProcessor(private val source: JsonElement = JsonNul
 		targetSource = changedSource
 	}
 }
+//
+//fun JsonPatchApplyProcessor.edit(actions: JsonPatchEditingContext.()->Unit) {
+//	val context = JsonPatchEditingContextImpl(source = this.targetSource)
+//	context.actions()
+//
+//	this.setSource(context.source)
+//}
 
-fun JsonPatchApplyProcessor.edit(actions: JsonPatchEditingContext.()->Unit) {
-	val context = JsonPatchEditingContextImpl(source = this.targetSource)
-	context.actions()
-
-	this.setSource(context.source)
+fun JsonPatchApplyProcessor.edit(test: Boolean = false, actions: JsonPatchEditingContext.()->Unit) {
+	if (this is ApplyProcessor) {
+		val context = JsonPatchEditingContextImpl(source = this.targetSource)
+		context.actions()
+		this.setSource(context.source)
+	}
+	else {
+		val context = JsonPatchEditingContextTestImpl(source = this.targetSource)
+		context.actions()
+		this.setSource(context.source)
+	}
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
 */
 
-package com.alightcreative.util.jsonpatch
+package com.temphee.kxjsonpatch
 
 import kotlinx.serialization.json.*
 import kotlin.jvm.JvmOverloads
