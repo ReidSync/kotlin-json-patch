@@ -1,5 +1,4 @@
-package com.beyondeye.kjsonpatch.lcs;
-
+package com.beyondeye.kjsonpatch.lcs
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for additional information regarding
@@ -9,19 +8,18 @@ package com.beyondeye.kjsonpatch.lcs;
  * law or agreed to in writing, software distributed under the License is distributed on an "AS IS"
  * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  * for the specific language governing permissions and limitations under the License.
- */
-
-/**
+ */ /**
  * An equation function, which determines equality between objects of type T.
- * <p>
- * It is the functional sibling of {@link java.util.Comparator}; {@link Equator} is to
- * {@link Object} as {@link java.util.Comparator} is to {@link java.lang.Comparable}.
  *
- * @param <T> the types of object this {@link Equator} can evaluate.
+ *
+ * It is the functional sibling of [java.util.Comparator]; [Equator] is to
+ * [Object] as [java.util.Comparator] is to [java.lang.Comparable].
+ *
+ * @param <T> the types of object this [Equator] can evaluate.
  * @since 4.0
  * @version $Id: Equator.java 1540567 2013-11-10 22:19:29Z tn $
- */
-public interface Equator<T> {
+</T> */
+interface Equator<T> {
     /**
      * Evaluates the two arguments for their equality.
      *
@@ -29,16 +27,16 @@ public interface Equator<T> {
      * @param o2 the second object to be equated.
      * @return whether the two objects are equal.
      */
-    boolean equate(T o1, T o2);
+    fun equate(o1: T, o2: T): Boolean
 
     /**
      * Calculates the hash for the object, based on the method of equality used in the equate
-     * method. This is used for classes that delegate their {@link Object#equals(Object) equals(Object)} method to an
-     * Equator (and so must also delegate their {@link Object#hashCode() hashCode()} method), or for implementations
+     * method. This is used for classes that delegate their [equals(Object)][Object.equals] method to an
+     * Equator (and so must also delegate their [hashCode()][Object.hashCode] method), or for implementations
      * of  org.apache.commons.collections4.map.HashedMap that use an Equator for the key objects.
      *
      * @param o the object to calculate the hash for.
      * @return the hash of the object.
      */
-    int hash(T o);
+    fun hash(o: T): Int
 }

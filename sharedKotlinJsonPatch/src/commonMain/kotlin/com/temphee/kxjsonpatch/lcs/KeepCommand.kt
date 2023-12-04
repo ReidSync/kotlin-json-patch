@@ -14,42 +14,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.beyondeye.kjsonpatch.lcs;
+package com.beyondeye.kjsonpatch.lcs
 
 /**
- * Command representing the deletion of one object of the first sequence.
- * <p>
- * When one object of the first sequence has no corresponding object in the
- * second sequence at the right place, the {@link EditScript edit script}
+ * Command representing the keeping of one object present in both sequences.
+ *
+ *
+ * When one object of the first sequence `equals` another objects in
+ * the second sequence at the right place, the [edit script][EditScript]
  * transforming the first sequence into the second sequence uses an instance of
- * this class to represent the deletion of this object. The objects embedded in
+ * this class to represent the keeping of this object. The objects embedded in
  * these type of commands always come from the first sequence.
  *
  * @see SequencesComparator
+ *
  * @see EditScript
  *
+ *
  * @since 4.0
- * @version $Id: DeleteCommand.java 1477760 2013-04-30 18:34:03Z tn $
+ * @version $Id: KeepCommand.java 1477760 2013-04-30 18:34:03Z tn $
  */
-public class DeleteCommand<T> extends EditCommand<T> {
-
+class KeepCommand<T>
+/**
+ * Simple constructor. Creates a new instance of KeepCommand
+ *
+ * @param object  the object belonging to both sequences (the object is a
+ * reference to the instance in the first sequence which is known
+ * to be equal to an instance in the second sequence)
+ */
+    (`object`: T) : EditCommand<T>(`object`) {
     /**
-     * Simple constructor. Creates a new instance of {@link DeleteCommand}.
-     *
-     * @param object  the object of the first sequence that should be deleted
-     */
-    public DeleteCommand(final T object) {
-        super(object);
-    }
-
-    /**
-     * Accept a visitor. When a <code>DeleteCommand</code> accepts a visitor, it calls
-     * its {@link CommandVisitor#visitDeleteCommand visitDeleteCommand} method.
+     * Accept a visitor. When a `KeepCommand` accepts a visitor, it
+     * calls its [visitKeepCommand][CommandVisitor.visitKeepCommand] method.
      *
      * @param visitor  the visitor to be accepted
      */
-    @Override
-    public void accept(final CommandVisitor<T> visitor) {
-        visitor.visitDeleteCommand(getObject());
+    override fun accept(visitor: CommandVisitor<T>?) {
+        visitor!!.visitKeepCommand(`object`)
     }
 }

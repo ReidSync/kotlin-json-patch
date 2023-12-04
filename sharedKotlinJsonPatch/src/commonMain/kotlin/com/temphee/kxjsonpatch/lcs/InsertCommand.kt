@@ -14,44 +14,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.beyondeye.kjsonpatch.lcs;
+package com.beyondeye.kjsonpatch.lcs
 
 /**
  * Command representing the insertion of one object of the second sequence.
- * <p>
+ *
+ *
  * When one object of the second sequence has no corresponding object in the
- * first sequence at the right place, the {@link EditScript edit script}
+ * first sequence at the right place, the [edit script][EditScript]
  * transforming the first sequence into the second sequence uses an instance of
  * this class to represent the insertion of this object. The objects embedded in
  * these type of commands always come from the second sequence.
  *
  * @see SequencesComparator
+ *
  * @see EditScript
+ *
  *
  * @since 4.0
  * @version $Id: InsertCommand.java 1477760 2013-04-30 18:34:03Z tn $
  */
-public class InsertCommand<T> extends EditCommand<T> {
-
+class InsertCommand<T>
+/**
+ * Simple constructor. Creates a new instance of InsertCommand
+ *
+ * @param object  the object of the second sequence that should be inserted
+ */
+    (`object`: T) : EditCommand<T>(`object`) {
     /**
-     * Simple constructor. Creates a new instance of InsertCommand
-     *
-     * @param object  the object of the second sequence that should be inserted
-     */
-    public InsertCommand(final T object) {
-        super(object);
-    }
-
-    /**
-     * Accept a visitor. When an <code>InsertCommand</code> accepts a visitor,
-     * it calls its {@link CommandVisitor#visitInsertCommand visitInsertCommand}
+     * Accept a visitor. When an `InsertCommand` accepts a visitor,
+     * it calls its [visitInsertCommand][CommandVisitor.visitInsertCommand]
      * method.
      *
      * @param visitor  the visitor to be accepted
      */
-    @Override
-    public void accept(final CommandVisitor<T> visitor) {
-        visitor.visitInsertCommand(getObject());
+    override fun accept(visitor: CommandVisitor<T>?) {
+        visitor!!.visitInsertCommand(`object`)
     }
-
 }

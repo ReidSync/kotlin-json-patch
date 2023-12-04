@@ -13,19 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
+package com.beyondeye.kjsonpatch
 
-package com.beyondeye.kjsonpatch;
-
-
-import com.google.gson.JsonElement;
-
-import java.util.List;
-
-interface JsonPatchProcessor {
-    void remove(List<String> path);
-    void replace(List<String> path, JsonElement value);
-    void add(List<String> path, JsonElement value);
-    void move(List<String> fromPath, List<String> toPath);
-    void copy(List<String> fromPath, List<String> toPath);
-    void test(List<String> path, JsonElement value);
+internal interface JsonPatchProcessor {
+    fun remove(path: List<String?>?)
+    fun replace(path: List<String?>?, value: com.google.gson.JsonElement?)
+    fun add(path: List<String?>?, value: com.google.gson.JsonElement?)
+    fun move(fromPath: List<String?>?, toPath: List<String?>?)
+    fun copy(fromPath: List<String?>?, toPath: List<String?>?)
+    fun test(path: List<String?>?, value: com.google.gson.JsonElement?)
 }
