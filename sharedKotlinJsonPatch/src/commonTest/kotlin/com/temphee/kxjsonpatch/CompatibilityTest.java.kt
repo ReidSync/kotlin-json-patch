@@ -27,8 +27,6 @@ class CompatibilityTest {
     var addNodeWithMissingValue: JsonElement = mapper.readTree("[{\"op\":\"add\",\"path\":\"a\"}]")
     var replaceNodeWithMissingValue: JsonElement = mapper.readTree("[{\"op\":\"replace\",\"path\":\"a\"}]")
 
-//    @org.junit.Before
-//    @Throws(java.lang.Exception::class)
     @BeforeTest
     fun setUp() {
         mapper = GsonObjectMapper()
@@ -36,8 +34,6 @@ class CompatibilityTest {
         replaceNodeWithMissingValue = mapper.readTree("[{\"op\":\"replace\",\"path\":\"a\"}]")
     }
 
-//    @org.junit.Test
-//    @Throws(java.io.IOException::class)
     @Test
     fun withFlagAddShouldTreatMissingValuesAsNulls() {
         val expected: JsonElement = mapper.readTree("{\"a\":null}")
@@ -49,8 +45,6 @@ class CompatibilityTest {
         assertEquals(result, expected)
     }
 
-
-//    @org.junit.Test
     @Test
     fun withFlagAddNodeWithMissingValueShouldValidateCorrectly() {
         JsonPatch.validate(
@@ -59,8 +53,6 @@ class CompatibilityTest {
         )
     }
 
-//    @org.junit.Test
-//    @Throws(java.io.IOException::class)
     @Test
     fun withFlagReplaceShouldTreatMissingValuesAsNull() {
         val source: JsonElement = mapper.readTree("{\"a\":\"test\"}")
@@ -76,7 +68,6 @@ class CompatibilityTest {
         )
     }
 
-    //@org.junit.Test
     @Test
     fun withFlagReplaceNodeWithMissingValueShouldValidateCorrectly() {
         JsonPatch.validate(

@@ -22,10 +22,9 @@ import kotlin.test.DefaultAsserter.fail
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
-import kotlin.test.assertFailsWith
 
+//@org.junit.runner.RunWith(org.junit.runners.Parameterized::class)
 abstract class AbstractTest {
-    //open fun data(): Collection<PatchTestCase> = ArrayList<PatchTestCase>()
     abstract fun data(): Collection<PatchTestCase>
 
     @Test

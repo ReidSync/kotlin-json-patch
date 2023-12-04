@@ -22,8 +22,6 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 class ApiTest {
-    //    @org.junit.Test(expected = InvalidJsonPatchException::class)
-//    @Throws(java.io.IOException::class)
     @Test
     fun applyingNonArrayPatchShouldThrowAnException() {
         assertFailsWith<InvalidJsonPatchException> {
@@ -34,10 +32,6 @@ class ApiTest {
         }
     }
 
-
-
-    //    @org.junit.Test(expected = InvalidJsonPatchException::class)
-//    @Throws(java.io.IOException::class)
     @Test
     fun applyingAnInvalidArrayShouldThrowAnException() {
         assertFailsWith<InvalidJsonPatchException> {
@@ -48,8 +42,6 @@ class ApiTest {
         }
     }
 
-    //    @org.junit.Test(expected = InvalidJsonPatchException::class)
-//    @Throws(java.io.IOException::class)
     @Test
     fun applyingAPatchWithAnInvalidOperationShouldThrowAnException() {
         assertFailsWith<InvalidJsonPatchException> {
@@ -60,8 +52,6 @@ class ApiTest {
         }
     }
 
-    //    @org.junit.Test(expected = InvalidJsonPatchException::class)
-//    @Throws(java.io.IOException::class)
     @Test
     fun validatingNonArrayPatchShouldThrowAnException() {
         assertFailsWith<InvalidJsonPatchException> {
@@ -71,8 +61,6 @@ class ApiTest {
         }
     }
 
-    //    @org.junit.Test(expected = InvalidJsonPatchException::class)
-//    @Throws(java.io.IOException::class)
     @Test
     fun validatingAnInvalidArrayShouldThrowAnException() {
         assertFailsWith<InvalidJsonPatchException> {
@@ -82,8 +70,6 @@ class ApiTest {
         }
     }
 
-    //    @org.junit.Test(expected = InvalidJsonPatchException::class)
-//    @Throws(java.io.IOException::class)
     @Test
     fun validatingAPatchWithAnInvalidOperationShouldThrowAnException() {
         assertFailsWith<InvalidJsonPatchException> {

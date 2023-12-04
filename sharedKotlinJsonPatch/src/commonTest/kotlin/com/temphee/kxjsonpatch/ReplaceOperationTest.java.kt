@@ -23,7 +23,6 @@ import kotlin.test.Test
  */
 class ReplaceOperationTest : AbstractTest() {
 //    @org.junit.runners.Parameterized.Parameters
-//    @Throws(java.io.IOException::class)
     override fun data(): Collection<PatchTestCase> {
         return PatchTestCase.load(TestData_REPLACE)
     }

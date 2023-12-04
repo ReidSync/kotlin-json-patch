@@ -36,8 +36,6 @@ class JsonDiffTest2 {
         jsonNode = objectMapper.readTree(TestData_DIFF).jsonArray
     }
 
-//    @org.junit.Test
-//    @Throws(java.lang.Exception::class)
     @Test
     fun testPatchAppliedCleanly() {
         for (i in 0 until jsonNode.size) {
@@ -52,11 +50,6 @@ class JsonDiffTest2 {
             val secondPrime: JsonElement = JsonPatch.apply(patch, first)
             println(secondPrime)
             assertEquals(secondPrime, second, message)
-//            assertEquals(
-//                message,
-//                secondPrime,
-//                org.hamcrest.core.IsEqual.equalTo<JsonElement>(second)
-//            )
         }
     }
 }

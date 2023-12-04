@@ -25,8 +25,12 @@ import kotlin.test.assertEquals
  * @author ctranxuan (streamdata.io).
  */
 class MoveOperationTest : AbstractTest() {
-//    @org.junit.Test
-//    @Throws(java.io.IOException::class)
+    private val MAPPER = GsonObjectMapper()
+    //@org.junit.runners.Parameterized.Parameters
+    override fun data(): Collection<PatchTestCase> {
+        return PatchTestCase.load(TestData_MOVE)
+    }
+
     @Test
     fun testMoveValueGeneratedHasNoValue() {
         val jsonNode1: JsonElement =
@@ -37,14 +41,9 @@ class MoveOperationTest : AbstractTest() {
             MAPPER.readTree("[{\"op\":\"move\",\"from\":\"/foo/waldo\",\"path\":\"/qux/thud\"}]")
         val diff: JsonElement = JsonDiff.asJson(jsonNode1, jsonNode2)
         assertEquals(diff, patch)
-//        assertEquals(
-//            diff,
-//            org.hamcrest.CoreMatchers.equalTo<JsonElement>(patch)
-//        )
     }
 
-//    @org.junit.Test
-//    @Throws(java.io.IOException::class)
+
     @Test
     fun testMoveArrayGeneratedHasNoValue() {
         val jsonNode1: JsonElement =
@@ -65,13 +64,4 @@ class MoveOperationTest : AbstractTest() {
     fun childTest() {
         test()
     }
-
-    //companion object {
-        private val MAPPER = GsonObjectMapper()
-        //@org.junit.runners.Parameterized.Parameters
-        //@Throws(java.io.IOException::class)
-        override fun data(): Collection<PatchTestCase> {
-            return PatchTestCase.load(TestData_MOVE)
-        }
-    //}
 }

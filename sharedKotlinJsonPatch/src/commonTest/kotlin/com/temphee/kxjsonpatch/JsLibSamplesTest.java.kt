@@ -26,8 +26,7 @@ import kotlin.test.Test
  * https://github.com/cujojs/jiff/blob/master/test/json-patch-tests/tests.json)
  */
 class JsLibSamplesTest : AbstractTest() {
-//    @org.junit.runners.Parameterized.Parameters
-//    @Throws(java.io.IOException::class)
+    //@org.junit.runners.Parameterized.Parameters
     override fun data(): Collection<PatchTestCase> {
         return PatchTestCase.load(TestData_JS_LIB_SAMPLES)
     }

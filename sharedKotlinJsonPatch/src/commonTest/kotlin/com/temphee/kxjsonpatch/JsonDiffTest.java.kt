@@ -38,8 +38,6 @@ class JsonDiffTest {
         jsonNode = objectMapper.readTree(TestData_SAMPLE).jsonArray
     }
 
-    //    @org.junit.Test
-//    @Throws(java.lang.Exception::class)
     @Test
     fun testSampleJsonDiff() {
         for (i in 0 until jsonNode.size) {
@@ -56,11 +54,8 @@ class JsonDiffTest {
         }
     }
 
-//    @org.junit.Test
-//    @Throws(java.lang.Exception::class)
     @Test
     fun testGeneratedJsonDiff() {
-        //val random: java.util.Random = java.util.Random()
         for (i in 0..999) {
             val first: JsonElement = TestDataGenerator.generate((0..10).random())
             val second: JsonElement = TestDataGenerator.generate((0..10).random())
@@ -74,20 +69,4 @@ class JsonDiffTest {
             assertEquals(second, secondPrime)
         }
     }
-
-//    companion object {
-//        var objectMapper = GsonObjectMapper()
-//        var jsonNode: JsonArray = objectMapper.readTree(TestData_SAMPLE).jsonArray
-//        //lateinit var jsonNode: JsonArray
-//        //@org.junit.BeforeClass
-//        //@Throws(java.io.IOException::class)
-//        @BeforeTest
-//        fun beforeClass() {
-////            val path = "/testdata/sample.json"
-////            val resourceAsStream: java.io.InputStream =
-////                JsonDiffTest::class.java.getResourceAsStream(path)
-//            val testData = TestData_SAMPLE
-//            jsonNode = objectMapper.readTree(testData).jsonArray
-//        }
-//    }
 }
