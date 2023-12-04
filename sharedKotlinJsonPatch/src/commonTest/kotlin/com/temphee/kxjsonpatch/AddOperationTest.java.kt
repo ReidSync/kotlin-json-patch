@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
+package com.alightcreative.util.jsonpatch
 
-package com.beyondeye.kjsonpatch;
+import resources.testdata.TestData_ADD
 
-import java.io.IOException;
-import java.util.Collection;
-import org.junit.runners.Parameterized.Parameters;
+object AddOperationTest : AbstractTest() {
 
-public class AddOperationTest extends AbstractTest {
-
-    @Parameters
-    public static Collection<PatchTestCase> data() throws IOException {
-        return PatchTestCase.load("add");
+    fun data(): Collection<PatchTestCase> {
+        return PatchTestCase.load(TestData_ADD)
     }
 }

@@ -1,3 +1,6 @@
+package resources.testdata
+
+const val TestData_ADD: String = """
 {
     "errors": [
         {
@@ -72,3 +75,4 @@
         }
     ]
 }
+"""

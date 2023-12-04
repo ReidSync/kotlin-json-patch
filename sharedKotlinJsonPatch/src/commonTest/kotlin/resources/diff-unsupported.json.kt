@@ -1,3 +1,6 @@
+package resources.testdata
+
+const val TestData_DIFF_UNSUPPORTED: String = """
 [
   {
     "message": "similar element is copied instead of added",
@@ -21,3 +24,4 @@
     ]
   }
 ]
+"""

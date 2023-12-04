@@ -1,3 +1,6 @@
+package resources.testdata
+
+const val TestData_REMOVE_UNSUPPORTED: String = """
 {
     "errors": [
         {
@@ -9,3 +12,4 @@
     "ops": [
     ]
 }
+"""

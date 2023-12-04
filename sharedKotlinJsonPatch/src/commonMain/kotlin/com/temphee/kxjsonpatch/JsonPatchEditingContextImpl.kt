@@ -298,6 +298,12 @@ fun JsonObject.addProperty(key: String, value: String): JsonObject {
 	}
 }
 
+fun JsonObject.addProperty(key: String, value: Number): JsonObject {
+	return this.copy {
+		this[key] = JsonPrimitive(value)
+	}
+}
+
 private inline fun JsonObject.copy(mutatorBlock: MutableMap<String, JsonElement>.() -> Unit): JsonObject {
 	return JsonObject(this.toMutableMap().apply(mutatorBlock))
 }

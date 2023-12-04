@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-
-package com.beyondeye.kjsonpatch;
-
-import java.io.IOException;
-import java.util.Collection;
-import org.junit.runners.Parameterized;
+package com.alightcreative.util.jsonpatch
 
 /**
  * @author ctranxuan (streamdata.io).
+ *
+ * These tests comes from JS JSON-Patch libraries (
+ * https://github.com/Starcounter-Jack/JSON-Patch/blob/master/test/spec/json-patch-tests/tests.json
+ * https://github.com/cujojs/jiff/blob/master/test/json-patch-tests/tests.json)
  */
-public class Rfc6902SamplesTest extends AbstractTest {
-
-    @Parameterized.Parameters
-    public static Collection<PatchTestCase> data() throws IOException {
-        return PatchTestCase.load("rfc6902-samples");
+object JsLibSamplesTest : AbstractTest() {
+//    @org.junit.runners.Parameterized.Parameters
+//    @Throws(java.io.IOException::class)
+    fun data(): Collection<PatchTestCase> {
+        return PatchTestCase.load("js-libs-samples")
     }
 }

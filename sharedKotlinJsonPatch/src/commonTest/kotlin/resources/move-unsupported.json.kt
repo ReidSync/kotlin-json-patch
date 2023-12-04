@@ -1,3 +1,6 @@
+package resources.testdata
+
+const val TestData_MOVE_UNSUPPORTED: String = """
 {
     "errors": [
         {
@@ -14,3 +17,4 @@
     "ops": [
     ]
 }
+"""

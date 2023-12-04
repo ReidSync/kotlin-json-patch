@@ -1,3 +1,6 @@
+package resources.testdata
+
+const val TestData_RFC6902_SAMPLES: String = """
 {
     "errors": [
         {
@@ -112,3 +115,4 @@
         }
     ]
 }
+"""

@@ -1,3 +1,6 @@
+package resources.testdata
+
+const val TestData_SAMPLE: String = """
 [
     {
         "first": { "a": 1 },
@@ -1561,3 +1564,4 @@
        "second":{"compare":{"":"b"},"tags":{"a":"b"}}
     }
 ]
+"""

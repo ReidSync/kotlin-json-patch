@@ -1,3 +1,6 @@
+package resources.testdata
+
+const val TestData_JS_LIB_SAMPLES: String = """
 {
   "errors": [
     { "node": {"bar": [1, 2]},
@@ -287,3 +290,4 @@
       "expected": [1, 3] }
   ]
 }
+"""

@@ -1,3 +1,6 @@
+package resources.testdata
+
+const val TestData_REPLACE: String = """
 {
     "errors": [
         {
@@ -33,3 +36,4 @@
         }
     ]
 }
+"""

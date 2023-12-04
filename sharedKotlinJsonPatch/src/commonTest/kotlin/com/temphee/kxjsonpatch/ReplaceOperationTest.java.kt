@@ -13,20 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
+package com.alightcreative.util.jsonpatch
 
-package com.beyondeye.kjsonpatch;
-
-import java.io.IOException;
-import java.util.Collection;
-import org.junit.runners.Parameterized;
+import resources.testdata.TestData_REPLACE
 
 /**
  * @author ctranxuan (streamdata.io).
  */
-public class RemoveOperationTest extends AbstractTest {
-
-    @Parameterized.Parameters
-    public static Collection<PatchTestCase> data() throws IOException {
-        return PatchTestCase.load("remove");
+object ReplaceOperationTest : AbstractTest() {
+//    @org.junit.runners.Parameterized.Parameters
+//    @Throws(java.io.IOException::class)
+    fun data(): Collection<PatchTestCase> {
+        return PatchTestCase.load(TestData_REPLACE)
     }
 }

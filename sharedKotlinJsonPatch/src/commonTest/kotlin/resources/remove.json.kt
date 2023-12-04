@@ -1,3 +1,6 @@
+package resources.testdata
+
+const val TestData_REMOVE: String = """
 {
     "errors": [
         {
@@ -27,3 +30,4 @@
         }
     ]
 }
+"""

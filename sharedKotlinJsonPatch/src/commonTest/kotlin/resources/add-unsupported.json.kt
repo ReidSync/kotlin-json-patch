@@ -1,3 +1,6 @@
+package resources.testdata
+
+const val TestData_ADD_UNSUPPORTED: String = """
 {
   "errors": [
     {
@@ -35,3 +38,4 @@
     }
   ]
 }
+"""

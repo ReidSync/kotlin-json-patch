@@ -1,3 +1,6 @@
+package resources.testdata
+
+const val TestData_JS_LIB_SAMPLES_UNSUPPORTED: String = """
 {
   "errors": [
     { "node": ["foo", "bar"],
@@ -89,3 +92,4 @@
       "expected": {"baz":"qux"}},
   ]
 }
+"""
