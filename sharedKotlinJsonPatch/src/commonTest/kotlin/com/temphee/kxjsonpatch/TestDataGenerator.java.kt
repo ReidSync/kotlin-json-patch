@@ -25,7 +25,6 @@ import kotlin.random.Random
  * Date: 05/08/14
  */
 object TestDataGenerator {
-    //private val random: java.util.Random = java.util.Random()
     private val random = Random(Int.MAX_VALUE)
     private val name: List<String> = arrayListOf<String>("summers", "winters", "autumn", "spring", "rainy")
     private val age: List<Int> = arrayListOf<Int>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)

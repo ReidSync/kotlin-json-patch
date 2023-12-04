@@ -4,7 +4,6 @@ import kotlinx.serialization.json.*
 
 /**
  * Created by Reid Byun on 2023/07/30.
- * Copyright (c) 2023 Bending Spoons. All rights reserved.
  */
 
 class JsonPatchEditingContextImpl(var source: JsonElement): JsonPatchEditingContext {

@@ -36,10 +36,6 @@ class PatchTestCase private constructor(
         private val MAPPER = GsonObjectMapper()
         //fun load(fileName: String): Collection<PatchTestCase> {
         fun load(testData: String): Collection<PatchTestCase> {
-//            val path = "/testdata/$fileName.json"
-//            val resourceAsStream: java.io.InputStream =
-//                PatchTestCase::class.java.getResourceAsStream(path)
-//            val testData = toString(resourceAsStream, "UTF-8")
             val tree: JsonElement = MAPPER.readTree(testData)
             val result: MutableList<PatchTestCase> = ArrayList<PatchTestCase>()
             for (node in tree.jsonObject.get("errors")!!.jsonArray) {

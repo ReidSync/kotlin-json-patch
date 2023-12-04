@@ -5,7 +5,6 @@ import kotlinx.serialization.json.JsonNull
 
 /**
  * Created by Reid Byun on 2023/07/31.
- * Copyright (c) 2023 Bending Spoons. All rights reserved.
  */
 
 abstract class JsonPatchApplyProcessor(private val source: JsonElement = JsonNull) {
@@ -24,14 +23,14 @@ abstract class JsonPatchApplyProcessor(private val source: JsonElement = JsonNul
 //	this.setSource(context.source)
 //}
 
-fun JsonPatchApplyProcessor.edit(test: Boolean = false, actions: JsonPatchEditingContext.()->Unit) {
-	if (this is ApplyProcessor) {
-		val context = JsonPatchEditingContextImpl(source = this.targetSource)
+fun JsonPatchApplyProcessor.edit(actions: JsonPatchEditingContext.()->Unit) {
+	if (this is NoopProcessor) { // for test
+		val context = JsonPatchEditingContextTestImpl(source = this.targetSource)
 		context.actions()
 		this.setSource(context.source)
 	}
 	else {
-		val context = JsonPatchEditingContextTestImpl(source = this.targetSource)
+		val context = JsonPatchEditingContextImpl(source = this.targetSource)
 		context.actions()
 		this.setSource(context.source)
 	}
