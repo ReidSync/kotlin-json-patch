@@ -19,11 +19,11 @@ package com.alightcreative.util.jsonpatch;
 
 import kotlinx.serialization.json.*
 
-internal interface JsonPatchProcessor {
-    fun remove(path: List<String>): JsonElement
-    fun replace(path: List<String>, value: JsonElement): JsonElement
-    fun add(path: List<String>, value: JsonElement): JsonElement
-    fun move(fromPath: List<String>, toPath: List<String>): JsonElement
-    fun copy(fromPath: List<String>, toPath: List<String>): JsonElement
-    fun test(path: List<String>, value: JsonElement): JsonElement
+interface JsonPatchProcessor {
+    fun remove(path: List<String>)
+    fun replace(path: List<String>, value: JsonElement)
+    fun add(path: List<String>, value: JsonElement)
+    fun move(fromPath: List<String>, toPath: List<String>)
+    fun copy(fromPath: List<String>, toPath: List<String>)
+    fun test(path: List<String>, value: JsonElement)
 }
