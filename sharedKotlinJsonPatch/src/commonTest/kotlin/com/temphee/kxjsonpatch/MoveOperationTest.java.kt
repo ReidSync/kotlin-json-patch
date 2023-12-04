@@ -61,12 +61,12 @@ class MoveOperationTest : AbstractTest() {
 //        )
     }
 
-    companion object {
+    //companion object {
         private val MAPPER = GsonObjectMapper()
         //@org.junit.runners.Parameterized.Parameters
         //@Throws(java.io.IOException::class)
         fun data(): Collection<PatchTestCase> {
             return PatchTestCase.load(TestData_MOVE)
         }
-    }
+    //}
 }

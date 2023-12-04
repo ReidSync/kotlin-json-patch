@@ -29,6 +29,13 @@ import kotlin.test.assertEquals
  * @author ctranxuan (streamdata.io).
  */
 class JsonDiffTest2 {
+    var objectMapper = GsonObjectMapper()
+    lateinit var jsonNode: JsonArray
+    @BeforeTest
+    fun setUp() {
+        jsonNode = objectMapper.readTree(TestData_DIFF).jsonArray
+    }
+
 //    @org.junit.Test
 //    @Throws(java.lang.Exception::class)
     @Test
@@ -50,21 +57,6 @@ class JsonDiffTest2 {
 //                secondPrime,
 //                org.hamcrest.core.IsEqual.equalTo<JsonElement>(second)
 //            )
-        }
-    }
-
-    companion object {
-        var objectMapper = GsonObjectMapper()
-        lateinit var jsonNode: JsonArray
-//        @org.junit.BeforeClass
-//        @Throws(java.io.IOException::class)
-        @BeforeTest
-        fun beforeClass() {
-//            val path = "/testdata/diff.kt"
-//            val resourceAsStream: java.io.InputStream =
-//                JsonDiffTest2::class.java.getResourceAsStream(path)
-//            val testData = toString(resourceAsStream, "UTF-8")
-            jsonNode = objectMapper.readTree(TestData_DIFF).jsonArray
         }
     }
 }

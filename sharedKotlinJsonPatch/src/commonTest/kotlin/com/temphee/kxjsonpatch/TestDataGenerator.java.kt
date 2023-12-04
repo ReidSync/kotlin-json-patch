@@ -48,9 +48,9 @@ object TestDataGenerator {
     )
 
     fun generate(count: Int): JsonElement {
-        val jsonNode: JsonArray = JsonArray(emptyList())
+        var jsonNode: JsonArray = JsonArray(emptyList())
         for (i in 0 until count) {
-            val objectNode: JsonObject = JsonObject(emptyMap())
+            var objectNode: JsonObject = JsonObject(emptyMap())
             objectNode.addProperty(
                 "name",
                 name[random.nextInt(name.size)]
@@ -70,7 +70,7 @@ object TestDataGenerator {
                     ), country.size / 2 + random.nextInt(country.size / 2)
                 )
             )
-            objectNode.add("country", countryNode)
+            objectNode = objectNode.add("country", countryNode)
             val friendNode: JsonArray = getArrayNode(
                 friends.subList(
                     random.nextInt(
@@ -78,8 +78,8 @@ object TestDataGenerator {
                     ), friends.size / 2 + random.nextInt(friends.size / 2)
                 )
             )
-            objectNode.add("friends", friendNode)
-            jsonNode.add(objectNode)
+            objectNode = objectNode.add("friends", friendNode)
+            jsonNode = jsonNode.add(objectNode)
         }
         return jsonNode
     }

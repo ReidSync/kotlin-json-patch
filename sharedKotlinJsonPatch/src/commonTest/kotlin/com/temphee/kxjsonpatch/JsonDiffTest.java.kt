@@ -21,6 +21,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import resources.testdata.TestData_SAMPLE
+import kotlin.jvm.JvmStatic
 import kotlin.random.Random
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -30,6 +31,13 @@ import kotlin.test.assertEquals
  * Unit test
  */
 class JsonDiffTest {
+    var objectMapper = GsonObjectMapper()
+    lateinit var jsonNode: JsonArray
+    @BeforeTest
+    fun setUp() {
+        jsonNode = objectMapper.readTree(TestData_SAMPLE).jsonArray
+    }
+
     //    @org.junit.Test
 //    @Throws(java.lang.Exception::class)
     @Test
@@ -53,10 +61,9 @@ class JsonDiffTest {
     @Test
     fun testGeneratedJsonDiff() {
         //val random: java.util.Random = java.util.Random()
-        val random = Random(Int.MAX_VALUE)
         for (i in 0..999) {
-            val first: JsonElement = TestDataGenerator.generate(random.nextInt(10))
-            val second: JsonElement = TestDataGenerator.generate(random.nextInt(10))
+            val first: JsonElement = TestDataGenerator.generate((0..10).random())
+            val second: JsonElement = TestDataGenerator.generate((0..10).random())
             val actualPatch: JsonElement = JsonDiff.asJson(first, second)
             println("Test # $i")
             println(first)
@@ -68,18 +75,19 @@ class JsonDiffTest {
         }
     }
 
-    companion object {
-        var objectMapper = GsonObjectMapper()
-        lateinit var jsonNode: JsonArray
-        //@org.junit.BeforeClass
-        //@Throws(java.io.IOException::class)
-        @BeforeTest
-        fun beforeClass() {
-//            val path = "/testdata/sample.json"
-//            val resourceAsStream: java.io.InputStream =
-//                JsonDiffTest::class.java.getResourceAsStream(path)
-            val testData = TestData_SAMPLE
-            jsonNode = objectMapper.readTree(testData).jsonArray
-        }
-    }
+//    companion object {
+//        var objectMapper = GsonObjectMapper()
+//        var jsonNode: JsonArray = objectMapper.readTree(TestData_SAMPLE).jsonArray
+//        //lateinit var jsonNode: JsonArray
+//        //@org.junit.BeforeClass
+//        //@Throws(java.io.IOException::class)
+//        @BeforeTest
+//        fun beforeClass() {
+////            val path = "/testdata/sample.json"
+////            val resourceAsStream: java.io.InputStream =
+////                JsonDiffTest::class.java.getResourceAsStream(path)
+//            val testData = TestData_SAMPLE
+//            jsonNode = objectMapper.readTree(testData).jsonArray
+//        }
+//    }
 }

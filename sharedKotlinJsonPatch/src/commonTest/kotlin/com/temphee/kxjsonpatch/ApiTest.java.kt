@@ -22,60 +22,74 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 class ApiTest {
-//    @org.junit.Test(expected = InvalidJsonPatchException::class)
+    //    @org.junit.Test(expected = InvalidJsonPatchException::class)
 //    @Throws(java.io.IOException::class)
-    fun applyingNonArrayPatchShouldThrowAnException() = assertFailsWith<InvalidJsonPatchException> {
+    @Test
+    fun applyingNonArrayPatchShouldThrowAnException() {
+        assertFailsWith<InvalidJsonPatchException> {
             val objectMapper = GsonObjectMapper()
             val invalid: JsonElement = objectMapper.readTree("[{\"not\": \"a patch\"}]")
             val to: JsonElement = objectMapper.readTree("{\"a\":1}")
             JsonPatch.apply(invalid.jsonArray, to)
         }
-
-
-//    @org.junit.Test(expected = InvalidJsonPatchException::class)
-//    @Throws(java.io.IOException::class)
-    @Test
-    fun applyingAnInvalidArrayShouldThrowAnException() = assertFailsWith<InvalidJsonPatchException> {
-        val objectMapper = GsonObjectMapper()
-        val invalid: JsonElement = objectMapper.readTree("[1, 2, 3, 4, 5]")
-        val to: JsonElement = objectMapper.readTree("{\"a\":1}")
-        JsonPatch.apply(invalid.jsonArray, to)
     }
 
-//    @org.junit.Test(expected = InvalidJsonPatchException::class)
+
+
+    //    @org.junit.Test(expected = InvalidJsonPatchException::class)
 //    @Throws(java.io.IOException::class)
     @Test
-    fun applyingAPatchWithAnInvalidOperationShouldThrowAnException() = assertFailsWith<InvalidJsonPatchException> {
-        val objectMapper = GsonObjectMapper()
-        val invalid: JsonElement = objectMapper.readTree("[{\"op\": \"what\"}]")
-        val to: JsonElement = objectMapper.readTree("{\"a\":1}")
-        JsonPatch.apply(invalid.jsonArray, to)
+    fun applyingAnInvalidArrayShouldThrowAnException() {
+        assertFailsWith<InvalidJsonPatchException> {
+            val objectMapper = GsonObjectMapper()
+            val invalid: JsonElement = objectMapper.readTree("[1, 2, 3, 4, 5]")
+            val to: JsonElement = objectMapper.readTree("{\"a\":1}")
+            JsonPatch.apply(invalid.jsonArray, to)
+        }
     }
 
-//    @org.junit.Test(expected = InvalidJsonPatchException::class)
+    //    @org.junit.Test(expected = InvalidJsonPatchException::class)
 //    @Throws(java.io.IOException::class)
     @Test
-    fun validatingNonArrayPatchShouldThrowAnException() = assertFailsWith<InvalidJsonPatchException> {
-        val objectMapper = GsonObjectMapper()
-        val invalid: JsonElement = objectMapper.readTree("{\"not\": \"a patch\"}")
-        JsonPatch.validate(invalid)
+    fun applyingAPatchWithAnInvalidOperationShouldThrowAnException() {
+        assertFailsWith<InvalidJsonPatchException> {
+            val objectMapper = GsonObjectMapper()
+            val invalid: JsonElement = objectMapper.readTree("[{\"op\": \"what\"}]")
+            val to: JsonElement = objectMapper.readTree("{\"a\":1}")
+            JsonPatch.apply(invalid.jsonArray, to)
+        }
     }
 
-//    @org.junit.Test(expected = InvalidJsonPatchException::class)
+    //    @org.junit.Test(expected = InvalidJsonPatchException::class)
 //    @Throws(java.io.IOException::class)
     @Test
-    fun validatingAnInvalidArrayShouldThrowAnException() = assertFailsWith<InvalidJsonPatchException> {
-        val objectMapper = GsonObjectMapper()
-        val invalid: JsonElement = objectMapper.readTree("[1, 2, 3, 4, 5]")
-        JsonPatch.validate(invalid)
+    fun validatingNonArrayPatchShouldThrowAnException() {
+        assertFailsWith<InvalidJsonPatchException> {
+            val objectMapper = GsonObjectMapper()
+            val invalid: JsonElement = objectMapper.readTree("{\"not\": \"a patch\"}")
+            JsonPatch.validate(invalid)
+        }
     }
 
-//    @org.junit.Test(expected = InvalidJsonPatchException::class)
+    //    @org.junit.Test(expected = InvalidJsonPatchException::class)
 //    @Throws(java.io.IOException::class)
     @Test
-    fun validatingAPatchWithAnInvalidOperationShouldThrowAnException() = assertFailsWith<InvalidJsonPatchException> {
-        val objectMapper = GsonObjectMapper()
-        val invalid: JsonElement = objectMapper.readTree("[{\"op\": \"what\"}]")
-        JsonPatch.validate(invalid)
+    fun validatingAnInvalidArrayShouldThrowAnException() {
+        assertFailsWith<InvalidJsonPatchException> {
+            val objectMapper = GsonObjectMapper()
+            val invalid: JsonElement = objectMapper.readTree("[1, 2, 3, 4, 5]")
+            JsonPatch.validate(invalid)
+        }
+    }
+
+    //    @org.junit.Test(expected = InvalidJsonPatchException::class)
+//    @Throws(java.io.IOException::class)
+    @Test
+    fun validatingAPatchWithAnInvalidOperationShouldThrowAnException() {
+        assertFailsWith<InvalidJsonPatchException> {
+            val objectMapper = GsonObjectMapper()
+            val invalid: JsonElement = objectMapper.readTree("[{\"op\": \"what\"}]")
+            JsonPatch.validate(invalid)
+        }
     }
 }

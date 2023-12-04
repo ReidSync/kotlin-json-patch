@@ -18,7 +18,8 @@ import kotlinx.serialization.json.*
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/   class PatchTestCase private constructor(
+*/
+class PatchTestCase private constructor(
     val isOperation: Boolean,
     node: JsonObject
 ) {
@@ -56,7 +57,7 @@ import kotlinx.serialization.json.*
 
         private fun isEnabled(node: JsonElement): Boolean {
             val disabled: JsonElement = node.jsonObject.get("disabled")!!
-            return disabled == null || !disabled.jsonPrimitive.boolean
+            return !disabled.jsonPrimitive.boolean
         }
     }
 }

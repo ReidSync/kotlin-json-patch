@@ -18,16 +18,18 @@ package com.temphee.kxjsonpatch
 import com.temphee.kxjsonpatch.utils.GsonObjectMapper
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class CompatibilityTest {
-    lateinit var mapper: GsonObjectMapper
-    lateinit var addNodeWithMissingValue: JsonElement
-    lateinit var replaceNodeWithMissingValue: JsonElement
+    var mapper: GsonObjectMapper = GsonObjectMapper()
+    var addNodeWithMissingValue: JsonElement = mapper.readTree("[{\"op\":\"add\",\"path\":\"a\"}]")
+    var replaceNodeWithMissingValue: JsonElement = mapper.readTree("[{\"op\":\"replace\",\"path\":\"a\"}]")
 
 //    @org.junit.Before
 //    @Throws(java.lang.Exception::class)
+    @BeforeTest
     fun setUp() {
         mapper = GsonObjectMapper()
         addNodeWithMissingValue = mapper.readTree("[{\"op\":\"add\",\"path\":\"a\"}]")

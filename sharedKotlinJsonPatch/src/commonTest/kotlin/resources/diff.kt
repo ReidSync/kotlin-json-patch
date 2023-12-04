@@ -1,7 +1,7 @@
 package resources.testdata
 
 const val TestData_DIFF: String = """
-[[
+[
     {
         "message": "empty patch if no changes",
         "first": "hello",
