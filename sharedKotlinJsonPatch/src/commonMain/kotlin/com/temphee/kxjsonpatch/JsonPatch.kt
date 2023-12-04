@@ -20,10 +20,6 @@ import kotlinx.serialization.json.*
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 
-/**
- * User: gopi.vishwakarma
- * Date: 31/07/14
- */
 object JsonPatch {
     internal var op = Operations()
     internal var consts = Constants()
@@ -42,21 +38,21 @@ object JsonPatch {
     }
 
     @Throws(InvalidJsonPatchException::class)
-    private fun process(patch: JsonElement, processor: JsonPatchProcessor, flags: Set<CompatibilityFlags>) {
+    private fun process(patch: JsonElement, processor: JsonPatchApplyProcessor, flags: Set<CompatibilityFlags>) {
 
-        if (!patch.isJsonArray())
+        if (patch !is JsonArray)
             throw InvalidJsonPatchException("Invalid JSON Patch payload (not an array)")
         val operations = patch.jsonArray.iterator()
         while (operations.hasNext()) {
             val jsonNode_ = operations.next()
-            if (!jsonNode_.isJsonObject()) throw InvalidJsonPatchException("Invalid JSON Patch payload (not an object)")
+            if (jsonNode_ !is JsonObject) throw InvalidJsonPatchException("Invalid JSON Patch payload (not an object)")
             val jsonNode = jsonNode_.jsonObject
             val operation = op.opFromName(getPatchAttr(jsonNode.jsonObject, consts.OP).toString().replace("\"".toRegex(), ""))
             val path = getPath(getPatchAttr(jsonNode, consts.PATH))
 
             when (operation) {
                 op.REMOVE -> {
-                    processor.remove(path)
+                    processor.edit { remove(path) }
                 }
 
                 op.ADD -> {
@@ -65,7 +61,7 @@ object JsonPatch {
                         value = getPatchAttr(jsonNode, consts.VALUE)
                     else
                         value = getPatchAttrWithDefault(jsonNode, consts.VALUE, JsonNull)
-                    processor.add(path, value)
+                    processor.edit { add(path, value) }
                 }
 
                 op.REPLACE -> {
@@ -74,17 +70,17 @@ object JsonPatch {
                         value = getPatchAttr(jsonNode, consts.VALUE)
                     else
                         value = getPatchAttrWithDefault(jsonNode, consts.VALUE, JsonNull)
-                    processor.replace(path, value)
+                    processor.edit { replace(path, value) }
                 }
 
                 op.MOVE -> {
                     val fromPath = getPath(getPatchAttr(jsonNode, consts.FROM))
-                    processor.move(fromPath, path)
+                    processor.edit { move(fromPath, path) }
                 }
 
                 op.COPY -> {
                     val fromPath = getPath(getPatchAttr(jsonNode, consts.FROM))
-                    processor.copy(fromPath, path)
+                    processor.edit { copy(fromPath, path) }
                 }
 
                 op.TEST -> {
@@ -93,7 +89,7 @@ object JsonPatch {
                         value = getPatchAttr(jsonNode, consts.VALUE)
                     else
                         value = getPatchAttrWithDefault(jsonNode, consts.VALUE, JsonNull)
-                    processor.test(path, value)
+                    processor.edit { test(path, value) }
                 }
             }
         }

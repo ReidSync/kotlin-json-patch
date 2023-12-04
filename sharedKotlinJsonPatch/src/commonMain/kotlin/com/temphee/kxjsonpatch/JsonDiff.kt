@@ -21,10 +21,6 @@ import kotlinx.serialization.json.*
 import kotlin.jvm.JvmStatic
 import kotlin.math.min
 
-/**
- * User: gopi.vishwakarma
- * Date: 30/07/14
- */
 object JsonDiff {
     internal var op = Operations()
     internal var consts = Constants()
@@ -387,8 +383,8 @@ object JsonDiff {
     }
 
     private fun getLCS(first_: JsonElement, second_: JsonElement): List<JsonElement> {
-        if (!first_.isJsonArray()) throw IllegalArgumentException("LCS can only work on JSON arrays")
-        if (!second_.isJsonArray()) throw IllegalArgumentException("LCS can only work on JSON arrays")
+        if (first_ !is JsonArray) throw IllegalArgumentException("LCS can only work on JSON arrays")
+        if (second_ !is JsonArray) throw IllegalArgumentException("LCS can only work on JSON arrays")
         val first = first_ as JsonArray
         val second = second_ as JsonArray
         return ListUtils.longestCommonSubsequence(first.toList(),second.toList())

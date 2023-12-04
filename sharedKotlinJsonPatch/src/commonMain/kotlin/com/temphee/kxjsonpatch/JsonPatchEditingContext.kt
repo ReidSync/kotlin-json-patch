@@ -14,10 +14,16 @@
  * limitations under the License.
 */
 
-package com.alightcreative.util.jsonpatch
+package com.alightcreative.util.jsonpatch;
+
+
 import kotlinx.serialization.json.*
 
-class ApplyProcessor(private val target: JsonElement) : JsonPatchApplyProcessor(target.deepCopy()) {
-    fun result(): JsonElement = targetSource
+interface JsonPatchEditingContext {
+    fun remove(path: List<String>)
+    fun replace(path: List<String>, value: JsonElement)
+    fun add(path: List<String>, value: JsonElement)
+    fun move(fromPath: List<String>, toPath: List<String>)
+    fun copy(fromPath: List<String>, toPath: List<String>)
+    fun test(path: List<String>, value: JsonElement)
 }
-

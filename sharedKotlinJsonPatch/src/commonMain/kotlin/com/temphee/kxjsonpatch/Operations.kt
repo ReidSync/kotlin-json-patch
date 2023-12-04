@@ -1,9 +1,5 @@
 package com.alightcreative.util.jsonpatch
 
-/**
- * User: gopi.vishwakarma
- * Date: 30/07/14
- */
 internal open class Operations {
     val ADD: Int = 0
     val REMOVE: Int = 1

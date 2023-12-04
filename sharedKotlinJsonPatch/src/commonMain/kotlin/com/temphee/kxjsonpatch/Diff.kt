@@ -20,10 +20,6 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlin.jvm.JvmStatic
 
-/**
- * User: gopi.vishwakarma
- * Date: 30/07/14
- */
 internal class Diff {
     val operation: Int
     val path: MutableList<Any>
