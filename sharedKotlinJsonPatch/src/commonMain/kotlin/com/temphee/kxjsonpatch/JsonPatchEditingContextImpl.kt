@@ -205,7 +205,7 @@ class JsonPatchEditingContextImpl(var source: JsonElement): JsonPatchEditingCont
 		}
 		else if (ret is JsonObject) {
 			if (ret.containsKey(key)) {
-				return findAndAction(ret[key]!!, path, ++pos, action)
+				return ret.set(key, findAndAction(ret[key]!!, path, ++pos, action))
 			}
 			return null
 		} else {
@@ -255,10 +255,10 @@ private fun JsonArray.insert(index: Int, value_: JsonElement?):JsonArray {
 		this.add(value)
 	}
 	else if(index<0) {
-		this.copy { insert(0, value) }
+		this.copy { add(0, value)}
 	}
 	else {
-		this.copy { insert(index, value) }
+		this.copy { add(index, value) }
 	}
 }
 
@@ -285,11 +285,39 @@ private inline fun JsonArray.copy(mutatorBlock: MutableList<JsonElement>.() -> U
 
 fun JsonObject.add(key: String, value_: JsonElement?): JsonObject {
 	val value=value_ ?:JsonNull
-	return copy { this[key] = value }
+	return copy {
+		//this.put(key, jsonNull)
+		this[key] = value
+//		when(value) {
+//			is JsonArray -> this[key] = value
+//			is JsonObject -> this[key] = value
+//			is JsonPrimitive -> this[key] = value
+//			is JsonNull -> this[key] = JsonNull
+//			else -> this[key] = value /* Todo check */
+//		}
+	}
+	//members.put(property, value ?: com.google.gson.JsonNull.INSTANCE)
 }
 
 private fun JsonObject.remove(key: String): JsonObject {
 	return copy { remove(key) }
+}
+
+fun JsonObject.set(key: String, value_: JsonElement?): JsonObject {
+	val value=value_ ?:JsonNull
+	if(!this.containsKey(key)) {
+		throw IndexOutOfBoundsException("Key[$key] doesn't exist")
+	}
+	return copy {
+		this[key] = value
+//		when(value) {
+//			is JsonArray -> this[key] = value
+//			is JsonObject -> this[key] = value
+//			is JsonPrimitive -> this[key] = value
+//			is JsonNull -> this[key] = JsonNull
+//			else -> this[key] = value /* Todo check */
+//		}
+	}
 }
 
 fun JsonObject.addProperty(key: String, value: String): JsonObject {
@@ -316,7 +344,8 @@ fun JsonElement.deepCopy(): JsonElement {
 	return when(this) {
 		is JsonArray-> this.jsonArray.copy {}
 		is JsonObject-> this.jsonObject.copy {}
-		is JsonPrimitive-> JsonPrimitive(this.jsonPrimitive.content) /* Todo check */
-		is JsonNull-> this.jsonNull
+		is JsonNull-> JsonNull // An order of checking type between JsonNull and JsonPrimitive makes difference.
+		is JsonPrimitive-> this /* Todo check */
+		else -> this /* Todo check */
 	}
 }
