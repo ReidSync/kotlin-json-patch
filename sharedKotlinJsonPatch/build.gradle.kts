@@ -35,7 +35,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.temphee.kxjsonpatch"
+    namespace = "com.reidsync.kxjsonpatch"
     compileSdk = 34
     defaultConfig {
         minSdk = 24
