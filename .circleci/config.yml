@@ -2,25 +2,38 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
+orbs:
+  android: circleci/android@1.0.3
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/configuration-reference/#executor-job
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/configuration-reference/#steps
+  build-android:
+    executor: android/android
+
+    steps:
+      - checkout
+      - android/restore-build-cache
+      - android/restore-gradle-cache
+      - run:
+          name: Run Android tests
+          command: ./gradlew :sharedKotlinJsonPatch:cleanTestDebugUnitTest :sharedKotlinJsonPatch:testDebugUnitTest --tests "com.reidsync.kxjsonpatch.*"
+      - android/save-gradle-cache
+      - android/save-build-cache
+
+  build-ios:
+    macos:
+      xcode: 15.4.0
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
-
+          name: Run iOS tests
+          command: ./gradlew :sharedKotlinJsonPatch:cleanIosSimulatorArm64Test :sharedKotlinJsonPatch:iosSimulatorArm64Test --tests "com.reidsync.kxjsonpatch.*"
+          
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  build-all:
     jobs:
-      - say-hello
+      - build-android
+      - build-ios
