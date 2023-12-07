@@ -1,11 +1,18 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    `maven-publish`
+    //`maven-publish`
+    id("convention.publication")
 }
 
+//repositories {
+//    gradlePluginPortal() // To use 'maven-publish' and 'signing' plugins in our own plugin
+//}
+
+//apply(from = "${rootProject.file("convention-plugins/src/main/kotlin/convention.publication.gradle.kts")}")
+//apply(plugin = "${rootProject.file("convention-plugins")}")
 group = "io.github.reidsync"
-version = "0.0.2.3"
+version = "0.0.2"
 
 kotlin {
     jvm {
