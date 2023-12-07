@@ -94,3 +94,11 @@ publishing {
 signing {
     sign(publishing.publications)
 }
+
+//region Fix Gradle warning about signing tasks using publishing task outputs without explicit dependencies
+// <https://youtrack.jetbrains.com/issue/KT-46466>
+tasks.withType<AbstractPublishToMaven>().configureEach {
+    val signingTasks = tasks.withType<Sign>()
+    mustRunAfter(signingTasks)
+}
+//endregion
