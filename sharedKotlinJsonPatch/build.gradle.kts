@@ -1,15 +1,27 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    `maven-publish`
 }
 
+group = "io.github.reidsync"
+version = "0.0.2.2"
+
 kotlin {
+    jvm {
+        // …
+    }
+    js(IR) {
+        // …
+    }
+    ios()
     androidTarget {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "1.8"
             }
         }
+        publishLibraryVariants("release", "debug")
     }
     
     listOf(
