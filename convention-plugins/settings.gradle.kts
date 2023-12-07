@@ -14,6 +14,4 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Kotlin-Json-Patch"
-include(":kxjsonpatch")
-includeBuild("convention-plugins")
+rootProject.name = "convention-plugins"
