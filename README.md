@@ -1,7 +1,6 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/FX4uQvXfdGbsC2LtLwAcHN/6WSq31hZUQd6ntmfk7zYqZ/tree/main.svg?style=svg&circle-token=726a635dd6621f418b6a9b009e03e14aff877c5b)](https://dl.circleci.com/status-badge/redirect/circleci/FX4uQvXfdGbsC2LtLwAcHN/6WSq31hZUQd6ntmfk7zYqZ/tree/main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/FX4uQvXfdGbsC2LtLwAcHN/6WSq31hZUQd6ntmfk7zYqZ/tree/main.svg?style=shield&circle-token=726a635dd6621f418b6a9b009e03e14aff877c5b)](https://dl.circleci.com/status-badge/redirect/circleci/FX4uQvXfdGbsC2LtLwAcHN/6WSq31hZUQd6ntmfk7zYqZ/tree/main)
 [![Kotlin](https://img.shields.io/badge/kotlin-1.9.20-orange.svg)](http://kotlinlang.org/)
-[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/FX4uQvXfdGbsC2LtLwAcHN/6WSq31hZUQd6ntmfk7zYqZ/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/FX4uQvXfdGbsC2LtLwAcHN/6WSq31hZUQd6ntmfk7zYqZ/tree/main)
-
-
 
 # kotlin-json-patch
 ## Kotlin JSON Patching Library
