@@ -22,7 +22,8 @@ jobs:
           name: Run Android tests
           command: |
             java -version
-            ./gradlew :sharedKotlinJsonPatch:cleanTestDebugUnitTest :sharedKotlinJsonPatch:testDebugUnitTest --tests "com.reidsync.kxjsonpatch.*"
+            ./gradlew :kotlin-json-patch:cleanTestDebugUnitTest :kotlin-json-patch:testDebugUnitTest --tests "com.reidsync.kxjsonpatch.*"
+            ./gradlew :kotlin-json-patch:cleanTestReleaseUnitTest :kotlin-json-patch:testReleaseUnitTest --tests "com.reidsync.kxjsonpatch.*"
       - android/save-gradle-cache
       - android/save-build-cache
 
@@ -33,7 +34,7 @@ jobs:
       - checkout
       - run:
           name: Run iOS tests
-          command: ./gradlew :sharedKotlinJsonPatch:cleanIosSimulatorArm64Test :sharedKotlinJsonPatch:iosSimulatorArm64Test --tests "com.reidsync.kxjsonpatch.*"
+          command: ./gradlew :kotlin-json-patch:cleanIosSimulatorArm64Test :kotlin-json-patch:iosSimulatorArm64Test --tests "com.reidsync.kxjsonpatch.*"
           
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
