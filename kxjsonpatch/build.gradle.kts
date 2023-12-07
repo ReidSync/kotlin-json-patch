@@ -2,7 +2,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     //`maven-publish`
-    id("convention.publication")
+    //id("convention.publication")
+    id("reidsync.maven-central-conventions")
 }
 
 //repositories {

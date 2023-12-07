@@ -6,8 +6,4 @@ repositories {
     gradlePluginPortal() // To use 'maven-publish' and 'signing' plugins in our own plugin
 }
 
-sourceSets {
-    dependencies {
-        implementation("reidsync:maven-central-conventions")
-    }
-}
+group = "reidsync"
