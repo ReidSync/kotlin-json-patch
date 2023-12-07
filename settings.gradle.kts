@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Kotlin-Json-Patch"
-include(":sharedKotlinJsonPatch")
+include(":kxjsonpatch")
