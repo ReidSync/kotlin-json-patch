@@ -5,12 +5,6 @@ plugins {
     id("convention.publication")
 }
 
-//repositories {
-//    gradlePluginPortal() // To use 'maven-publish' and 'signing' plugins in our own plugin
-//}
-
-//apply(from = "${rootProject.file("convention-plugins/src/main/kotlin/convention.publication.gradle.kts")}")
-//apply(plugin = "${rootProject.file("convention-plugins")}")
 group = "io.github.reidsync"
 version = "0.0.2"
 
