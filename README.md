@@ -1,4 +1,9 @@
-# kxjsonpatch
+[![Kotlin](https://img.shields.io/badge/kotlin-1.9.20-orange.svg)](http://kotlinlang.org/)
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/FX4uQvXfdGbsC2LtLwAcHN/6WSq31hZUQd6ntmfk7zYqZ/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/FX4uQvXfdGbsC2LtLwAcHN/6WSq31hZUQd6ntmfk7zYqZ/tree/main)
+
+
+
+# kotlin-json-patch
 ## Kotlin JSON Patching Library
 
 ### This is an implementation of RFC 6902 JSON Patch written exclusively in Kotlin.
@@ -34,9 +39,6 @@ or
 val result: JsonElement = source.apply(patch: patch)
 ```
 This operation is performed on a clone of the source object.
-
-## Test
-You can run unit tests the same way as zjsonpatch and KJsonPatch.
 
 ## ______
 These changes mostly involve porting from Java to Kotlin to transform it into a pure Kotlin library that can be imported into Kotlin Multiplatform. If you have any specific preferences or further adjustments, feel free to let me know!
