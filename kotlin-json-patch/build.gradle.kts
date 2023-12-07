@@ -1,12 +1,11 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    `maven-publish`
-    id("convention.publication")
+    id("maven-publish.conventions")
 }
 
 group = "io.github.reidsync"
-version = "0.0.1.2-alpha"
+version = "1.0.0"
 
 kotlin {
     jvm {

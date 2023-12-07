@@ -61,7 +61,7 @@ publishing {
 
         // Provide artifacts information requited by Maven Central
         pom {
-            name.set("kxjsonpatch")
+            name.set("kotlin-json-patch")
             description.set("JSON Patch library written exclusively in Kotlin")
             url.set("https://github.com/ReidSync/kotlin-json-patch")
 
@@ -73,7 +73,7 @@ publishing {
             }
             developers {
                 developer {
-                    id.set("temphee")
+                    id.set("ReidSync")
                     name.set("Reid Byun")
                     email.set("temphee@gmail.com")
                 }
