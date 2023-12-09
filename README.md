@@ -28,8 +28,8 @@ This code has been modified from the original library in the following ways:
 * Substituted Gson dependency with [`kotlinx.serialization.json`](https://kotlinlang.org/api/latest/kotlin.test/)
 * Added extensions for convenient usage of [`kotlinx.serialization.json`](https://kotlinlang.org/api/latest/kotlin.test/)
 
-## Getting Started
-First add the dependency to your project:
+## Setup
+Add the dependency to your app module’s `build.gradle` file:
 
 ```kotlin
 repositories {
@@ -107,8 +107,8 @@ These changes mostly involve porting from Java to Kotlin to transform it into a 
 [badge-platform-watchos]: https://img.shields.io/badge/-watchos-C0C0C0.svg?logo=Apple&logoColor=white&style=flat
 [badge-platform-wasm]: https://img.shields.io/badge/-wasm-624FE8.svg?logo=webassembly&logoColor=white&style=flat
 [badge-platform-windows]: https://img.shields.io/badge/-windows-4D76CD.svg?logo=Windows&logoColor=whitestyle=flat
-[badge-support-android-native]: https://img.shields.io/badge/support-AndroidNative-6EDB8D.svg?style=flat
-[badge-support-apple-silicon]: https://img.shields.io/badge/support-AppleSilicon-808080.svg?style=flat
+[badge-support-android-native]: https://img.shields.io/badge/support-Android%20Native-6EDB8D.svg?style=flat?fontColor=white
+[badge-support-apple-silicon]: https://img.shields.io/badge/support-Apple%20Silicon-808080.svg?style=flat
 [badge-support-kotlin-multiplatform]: https://img.shields.io/badge/support-Kotlin%20Multiplatform-6A5ACD.svg?style=flat
 [badge-support-js-ir]: https://img.shields.io/badge/support-[js--IR]-AAC4E0.svg?style=flat
 [badge-support-linux-arm]: https://img.shields.io/badge/support-[LinuxArm]-2D3F6C.svg?style=flat
