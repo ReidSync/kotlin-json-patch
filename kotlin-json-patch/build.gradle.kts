@@ -50,6 +50,6 @@ android {
     namespace = "com.reidsync.kxjsonpatch"
     compileSdk = 34
     defaultConfig {
-        minSdk = 24
+        minSdk = 23
     }
 }
