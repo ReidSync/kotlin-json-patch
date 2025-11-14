@@ -18,6 +18,8 @@ package com.reidsync.kxjsonpatch
 import com.reidsync.kxjsonpatch.utils.GsonObjectMapper
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import resources.testdata.TestData_SAMPLE
@@ -31,6 +33,7 @@ import kotlin.test.assertEquals
 class JsonDiffTest {
     var objectMapper = GsonObjectMapper()
     lateinit var jsonNode: JsonArray
+
     @BeforeTest
     fun setUp() {
         jsonNode = objectMapper.readTree(TestData_SAMPLE).jsonArray
@@ -67,4 +70,54 @@ class JsonDiffTest {
             assertEquals(second, secondPrime)
         }
     }
+
+    /**
+     * REMOVE operation did result in JsonPatch generated with value field present.
+     * That should not happen.
+     */
+    @Test
+    fun testNoValueShouldBePresentInRemoveOperation() {
+        val first = JsonObject(mapOf("key" to JsonPrimitive("value")))
+        val second = JsonObject(emptyMap())
+        val patch: JsonElement = JsonDiff.asJson(first, second)
+        println(first)
+        println(second)
+        println(patch)
+        val expectedPatch = JsonArray(
+            content =
+                listOf(
+                    JsonObject(
+                        mapOf(
+                            "op" to JsonPrimitive("remove"),
+                            "path" to JsonPrimitive("/key"),
+                        )
+                    )
+                )
+        )
+        assertEquals(expectedPatch, patch)
+    }
+    
+    @Test
+    fun testValueShouldBePresentInOtherOperation() {
+        val first = JsonObject(emptyMap())
+        val second = JsonObject(mapOf("key" to JsonPrimitive("value")))
+        val patch: JsonElement = JsonDiff.asJson(first, second)
+        println(first)
+        println(second)
+        println(patch)
+        val expectedPatch = JsonArray(
+            content =
+                listOf(
+                    JsonObject(
+                        mapOf(
+                            "op" to JsonPrimitive("add"),
+                            "path" to JsonPrimitive("/key"),
+                            "value" to JsonPrimitive("value"),
+                        )
+                    )
+                )
+        )
+        assertEquals(expectedPatch, patch)
+    }
+
 }
