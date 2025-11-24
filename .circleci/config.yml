@@ -10,6 +10,7 @@ orbs:
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
+# ref: https://circleci.com/docs/guides/execution-managed/using-macos/
 jobs:
   build-android:
     executor: java17
@@ -29,7 +30,8 @@ jobs:
 
   build-ios:
     macos:
-      xcode: 15.0.0
+      xcode: 16.4.0
+    resource_class: macos.m1.medium.gen1
     steps:
       - checkout
       - run:

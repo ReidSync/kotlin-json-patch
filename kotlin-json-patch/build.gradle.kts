@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmDefaultMode
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -5,24 +8,26 @@ plugins {
 }
 
 group = "io.github.reidsync"
-version = "1.0.0"
+version = "1.1.0"
 
 kotlin {
-    jvm {
-        // …
-    }
-    js(IR) {
-        // …
-    }
-    ios()
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
+	jvmToolchain(8)
+
+	@OptIn(ExperimentalWasmDsl::class)
+	wasmJs {
+		browser()
+		nodejs()
+	}
+
+	androidTarget {
+		compilerOptions {
+			jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
+			jvmDefault = JvmDefaultMode.DISABLE
+	    }
         publishLibraryVariants("release", "debug")
     }
+
+	jvm("desktop")
     
     listOf(
         iosX64(),
