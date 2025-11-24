@@ -225,7 +225,9 @@ object JsonDiff {
             jsonNode = jsonNode.addProperty(consts.PATH, getArrayNodeRepresentation(diff.toPath))  // destination Path
         } else {
             jsonNode = jsonNode.addProperty(consts.PATH, getArrayNodeRepresentation(diff.path))
-            jsonNode = jsonNode.add(consts.VALUE, diff.value)
+            if (op.REMOVE != diff.operation) {
+                jsonNode = jsonNode.add(consts.VALUE, diff.value)
+            }
         }
         return jsonNode
     }
