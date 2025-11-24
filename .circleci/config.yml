@@ -30,6 +30,7 @@ jobs:
   build-ios:
     macos:
       xcode: 15.0.0
+    resource_class: medium
     steps:
       - checkout
       - run:
