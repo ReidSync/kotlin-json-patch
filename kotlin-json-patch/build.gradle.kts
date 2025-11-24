@@ -14,11 +14,10 @@ kotlin {
     js(IR) {
         // …
     }
-    ios()
     androidTarget {
         compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
+	        compilerOptions.configure {
+		        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
             }
         }
         publishLibraryVariants("release", "debug")
