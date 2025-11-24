@@ -5,3 +5,13 @@ plugins {
 repositories {
     gradlePluginPortal() // To use 'maven-publish' and 'signing' plugins in our own plugin
 }
+
+java {
+	toolchain {
+		languageVersion.set(JavaLanguageVersion.of(17))
+	}
+}
+
+kotlin {
+	jvmToolchain(17)
+}
