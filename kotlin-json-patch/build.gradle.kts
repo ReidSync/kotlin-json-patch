@@ -10,18 +10,18 @@ group = "io.github.reidsync"
 version = "1.0.0"
 
 kotlin {
-    androidTarget {
-        compilations.all {
-	        compilerOptions.configure {
-		        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
-            }
-        }
+	jvmToolchain(8)
+
 	@OptIn(ExperimentalWasmDsl::class)
 	wasmJs {
 		browser()
 		nodejs()
 	}
-	
+
+	androidTarget {
+		compilerOptions {
+			jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
+	    }
         publishLibraryVariants("release", "debug")
     }
 
